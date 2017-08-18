@@ -8,3 +8,6 @@ class Product(models.Model):
     price = models.IntegerField()
     daysBeforeShipping = models.IntegerField()
     img = models.ImageField()
+    pid = id
+
+    # create staticfiles and look up db storage (check credentials, look for similar errors) figure out pid
