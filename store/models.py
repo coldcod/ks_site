@@ -16,15 +16,8 @@ class Product(models.Model):
     stock = models.IntegerField(default=2)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True)
     def save(self, *args, **kwargs):
-        slug_def = self.title + str(self.id)
-        self.pid = slugify(slug_def)
+        slug_def = self.title + "-" + str(self.id)
+        self.pid = slugify(slug_def.lower())
         super(Product, self).save(*args, **kwargs)
-
-'''@receiver(models.signals.post_save, sender=Product, dispatch_uid="generate_pid")
-def gen_pid(sender, **kwargs):
-    if kwargs.get('created', False):
-        instance = kwargs.get('instance')
-        instance.pid = instance.title.replace(" ", "-") + instance.id()
-        instance.save()'''
 
     # create staticfiles and look up db storage (check credentials, look for similar errors) figure out pid
