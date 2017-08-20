@@ -1,7 +1,8 @@
+{% load static %}
 {% if latest_products %}
     <ul>
         {% for product in latest_products %}
-            <li><a href="/store/{{ product.pid }}/"><img src="{{product.img}}"></a><br>{{product.title}} - Rs. {{product.price}}
+            <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60></a><br>{{product.title}} - Rs. {{product.price}}
         {% endfor %}
     </ul>
 {% else %}
