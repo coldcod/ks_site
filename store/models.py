@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from datetime import datetime
+from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django_extensions.db.fields import AutoSlugField
 
@@ -12,7 +13,7 @@ class Product(models.Model):
     price = models.IntegerField()
     daysBeforeShipping = models.CharField(max_length=10)
     img = models.ImageField(null=True, blank=True)
-    pubdate = models.DateTimeField(default=datetime.now())
+    pubdate = models.DateTimeField(default=timezone.now)
     stock = models.IntegerField(default=2)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
     def save(self, *args, **kwargs):

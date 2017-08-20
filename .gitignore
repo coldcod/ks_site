@@ -1,4 +1,3 @@
-store/migrations/
 ks_site/*.pyc
 ks_site/*.py~
 store/*.pyc
