@@ -14,10 +14,12 @@ class Product(models.Model):
     img = models.ImageField(null=True, blank=True)
     pubdate = models.DateTimeField(default=datetime.now())
     stock = models.IntegerField(default=2)
-    pid = models.SlugField(default=slugify(" "), null=True, blank=True)
+    pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
     def save(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
         slug_def = self.title + "-" + str(self.id)
         self.pid = slugify(slug_def.lower())
+        self.title = self.title.title()
         super(Product, self).save(*args, **kwargs)
 
     # create staticfiles and look up db storage (check credentials, look for similar errors) figure out pid
