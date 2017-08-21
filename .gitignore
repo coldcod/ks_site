@@ -2,3 +2,6 @@ ks_site/*.pyc
 ks_site/*.py~
 store/*.pyc
 store/*.py~
+store/static/store/*.jpg
+store/static/store/*.png
+store/static/store/*.JPG

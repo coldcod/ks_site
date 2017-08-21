@@ -6,5 +6,8 @@
 </style>
 <h1>{{product.title}}</h1><hr>
 <img src="{%static 'store/'%}{{product.img}}" height=150>
+{% for image in image_list %}
+    <img src="{%static 'store/'%}{{image}}" height=150>
+{% endfor %}
 <h3>{{product.description}}</h4>
-<h4>Rs. {{product.price}}</h4>
+<h4>Rs. {{product.price}} | Shipped out in {{ product.daysBeforeShipping }} days.</h4>

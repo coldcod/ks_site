@@ -16,6 +16,8 @@ class Product(models.Model):
     pubdate = models.DateTimeField(default=timezone.now)
     stock = models.IntegerField(default=2)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
+    def __str__(self):
+        return self.title
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
         slug_def = self.title + "-" + str(self.id)
@@ -23,4 +25,8 @@ class Product(models.Model):
         self.title = self.title.title()
         super(Product, self).save(*args, **kwargs)
 
-    # create staticfiles and look up db storage (check credentials, look for similar errors) figure out pid
+class ProductImages(models.Model):
+    product = models.ForeignKey(Product, related_name="images")
+    image = models.ImageField()
+    def __str__(self):
+        return str(self.image)

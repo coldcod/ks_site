@@ -13,6 +13,7 @@ def index(req):
 def product_page(req, pid_url):
     product = Product.objects.get(pid=pid_url)
     context = {
-        'product': product
+        'product': product,
+        'image_list': product.images.all()
     }
     return render(req, 'store/product.html', context)
