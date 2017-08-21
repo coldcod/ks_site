@@ -10,6 +10,7 @@ class ProductImagesInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
 
     inlines = [ProductImagesInline]
+    fields = ['description', 'title', 'price', 'daysBeforeShipping', 'img', 'stock']
     #list_display = ['image']
 
 admin.site.register(Product, ProductAdmin)
