@@ -8,7 +8,8 @@ class ProductImagesInline(admin.TabularInline):
     extra = 5
 
 class ProductAdmin(admin.ModelAdmin):
-
+    list_display = ['title', 'price', 'stock', 'pubdate', 'pid']
+    list_filter = ['pubdate']
     inlines = [ProductImagesInline]
     fields = ['description', 'title', 'price', 'daysBeforeShipping', 'img', 'stock']
     #list_display = ['image']
