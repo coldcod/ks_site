@@ -1,8 +1,26 @@
+<style>
+    .text_links {
+        border-bottom: 1.6px solid #b4e7f8;
+        box-shadow: inset 0 -6.2px 0 #b4e7f8;
+        color: inherit;
+        transition: background .15s cubic-bezier(.33,.66,.66,1);
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .text_links:hover {
+        background: #b4e7f8;
+    }
+</style>
 {% load static %}
 {% if latest_products %}
     <ul>
         {% for product in latest_products %}
-            <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60></a><br>{{product.title}} - Rs. {{product.price}}
+            <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br><span class="text_links" style="text-decoration: none;">{{product.title}} - Rs. {{product.price}}</span></a><br><br>
         {% endfor %}
     </ul>
 {% else %}
