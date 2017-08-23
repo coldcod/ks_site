@@ -9,4 +9,5 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+        exclude = ['username',]
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2',]

@@ -14,12 +14,13 @@ def signup(req):
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+            instance = form.save(commit=False)
             raw_psswd = form.cleaned_data.get('password2')
             email = form.cleaned_data.get('email')
+            instance.username = email
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
+            instance.save()
             user = authenticate(username=email, password=raw_psswd, email=email, first_name=first_name, last_name=last_name)
             login(req, user)
             return redirect('store_index')
