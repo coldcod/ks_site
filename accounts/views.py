@@ -3,12 +3,28 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
-from .forms import SignUpForm
+from .forms import SignUpForm, ProfileForm
 
 # Create your views here.
 
 def index(req):
     return render(req, 'accounts/index.html')
+
+def settings(req):
+    if req.method == 'POST':
+        form = ProfileForm(req.POST)
+        if form.is_valid():
+            # Get the logged in user from session or something, then
+            '''user = user.refresh_from_db()
+            user.profile.cc = form.cleaned_data.get('cc')
+            user.profile.address = form.cleaned_data.get('address')
+            user.profile.save()
+            user.save()'''
+            success_message = "Settings were successfuly saved."
+    else:
+        form = ProfileForm()
+        success_message = None
+    return render(req, 'accounts/settings.html', {'form': form, 'success_message': success_message})
 
 def signup(req):
     if req.method == 'POST':
@@ -18,10 +34,8 @@ def signup(req):
             raw_psswd = form.cleaned_data.get('password2')
             email = form.cleaned_data.get('email')
             instance.username = email
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
             instance.save()
-            user = authenticate(username=email, password=raw_psswd, email=email, first_name=first_name, last_name=last_name)
+            user = authenticate(username=email, password=raw_psswd, email=email)
             login(req, user)
             return redirect('store_index')
     else:

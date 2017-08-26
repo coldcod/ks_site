@@ -1,0 +1,24 @@
+{% block content %}
+  <h2>Settings</h2>
+  <hr>
+  {% if success_message %}
+      {{ success_message }}
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+            <br><small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <br><button type="submit">Save</button>
+  </form>
+  <a href="/accounts/logout">Logout</a>
+{% endblock %}
