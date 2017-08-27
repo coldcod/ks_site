@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'store.apps.StoreConfig',
     'accounts.apps.AccountsConfig',
+    'homepage.apps.HomepageConfig',
 ]
 
 MIDDLEWARE = [

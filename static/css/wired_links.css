@@ -1,4 +1,3 @@
-<style type="text/css" media="screen">
     .text_links {
         transition: background .15s cubic-bezier(.33,.66,.66,1);
         border-bottom: 1.6px solid #b4e7f8;
@@ -14,4 +13,3 @@
     .text_links:hover {
         background: #b4e7f8;
     }
-</style>

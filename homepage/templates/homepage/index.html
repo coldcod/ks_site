@@ -1,0 +1,15 @@
+{%load static%}
+<head>
+    <link rel="stylesheet" type="text/css" href="{%static 'css/'%}wired_links.css">
+</head>
+<center>
+    <h1 style="top: 50%;">KS-SITE</h1><br>
+    {% for item in items %}
+        <a class="text_links" style="" href="{{item.link}}">
+            {{item.content}}
+        </a>
+        {% if item.content != 'Store' %}
+            <pre>  -  </pre>
+        {% endif %}
+    {% endfor %}
+</center>
