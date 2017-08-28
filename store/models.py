@@ -3,7 +3,8 @@ from django.dispatch import receiver
 from datetime import datetime
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from django_extensions.db.fields import AutoSlugField
+
+from .pid import pid
 
 # Create your models here.
 
@@ -21,8 +22,8 @@ class Product(models.Model):
         return self.title
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
-        slug_def = self.title + "-" + str(self.id)
-        self.pid = slugify(slug_def.lower())
+        hash_pid = pid.make_token(self)
+        self.pid = hash_pid
         self.title = self.title.title()
         super(Product, self).save(*args, **kwargs)
 
