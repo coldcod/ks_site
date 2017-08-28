@@ -17,4 +17,5 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
+        exclude = ['email_confirmed',]
         fields = ['cc', 'address',]
