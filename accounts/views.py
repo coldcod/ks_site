@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
@@ -20,12 +21,12 @@ def settings(req):
     if req.method == 'POST':
         form = ProfileForm(req.POST)
         if form.is_valid():
-            # Get the logged in user from session or something, then
-            '''user = user.refresh_from_db()
+            user = req.user
+            user.refresh_from_db()
             user.profile.cc = form.cleaned_data.get('cc')
             user.profile.address = form.cleaned_data.get('address')
             user.profile.save()
-            user.save()'''
+            user.save()
             success_message = "Settings were successfuly saved."
     else:
         form = ProfileForm()
