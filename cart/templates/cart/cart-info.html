@@ -1,0 +1,8 @@
+<ul>
+    {% if orders %}
+        {% for order in orders %}
+            <li>{{order.product.title}}</li>
+        {% endfor %}
+    {% else %}<p>No orders</p>
+    {% endif %}
+</ul>

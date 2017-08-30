@@ -14,6 +14,16 @@ from .tokens import account_activation_token
 
 # Create your views here.
 
+def xyz(req):
+    req.session['xyz'] = "Multi-tab session test"
+    req.user.email = 'user-accross-tabs@a.com'
+    return HttpResponse(str(req.user.is_anonymous) + str(req.user.email) + "<br><a href='/accounts/abc/'>abc</a>")
+
+def abc(req):
+    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+    x = "True Bool" if boolean else "False Bool"
+    return HttpResponse(x)
+
 def index(req):
     return render(req, 'accounts/index.html')
 
