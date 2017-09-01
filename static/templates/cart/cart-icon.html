@@ -1,0 +1,10 @@
+{% block content %}
+    {% if orders %}
+        <a href="/cart/">
+            <div class="cart">
+                Items - {{count}}
+                Amount - {{total}}
+            </div>
+        </a>
+    {% endif %}
+{% endblock %}

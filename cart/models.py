@@ -10,7 +10,7 @@ from store.models import Product
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    session_id = models.CharField(default='', max_length=500)
+    session_id = models.CharField(default='', max_length=500, null=True)
     order_date = models.DateTimeField(default=timezone.now)
     def _add(self, pid):
         product = Product.objects.get(pid=pid)

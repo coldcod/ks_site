@@ -16,12 +16,12 @@ def get_cart(req):
 def add_to_cart(req, pid):
     cart = get_cart(req)
     cart._add(pid)
-    return redirect('cart-info')
+    return redirect('/store/' + pid + "/?tm=Added+to+cart/")
 
 def remove_from_cart(req, pid):
     cart = get_cart(req)
     cart._remove(pid)
-    return redirect('cart-info')
+    return redirect('/store/' + pid + '/?tm=Removed+from+cart/')
 
 def cart(req):
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"

@@ -5,6 +5,13 @@
         color: rgb(19, 163, 42);
     }
 </style>
+{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
+
+{% if tm %}
+    <div class="top_message" style="background: rgb(25, 133, 46); color: white; width: 10%;">
+        <h3>{{tm}}</h3>
+    </div>
+{% endif %}
 <h1>{{product.title}}</h1><hr>
 <img src="{%static 'store/'%}{{product.img}}" height=150>
 {% for image in image_list %}
