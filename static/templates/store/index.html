@@ -1,6 +1,8 @@
 {% load static %}
 <link rel="stylesheet" href="{%static 'css/'%}wired_links.css">
 
+{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
+
 {% if latest_products %}
     <ul>
         {% for product in latest_products %}
