@@ -1,4 +1,20 @@
+<hr>
 <ul>
+    User cart:
+    {% for item in user_cart %}
+        <li>{{item.product.title}}</li>
+    {% endfor %}
+</ul>
+<hr>
+<ul>
+    Session cart:
+    {% for item in session_cart %}
+        <li>{{item.product.title}}</li>
+    {% endfor %}
+</ul>
+<hr>
+<ul>
+    Cart info overall:
     {% if orders %}
         {% for order in orders %}
             <li>{{order.product.title}}</li>

@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils import timezone
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from django.contrib.auth.signals import user_logged_in
 import sys
 sys.path.append('../')
 from store.models import Product
@@ -32,3 +34,13 @@ class ProductOrder(models.Model):
     quantity = models.IntegerField(default=0)
     def __str__(self):
         return self.product.title
+
+@receiver(user_logged_in)
+def session_to_user_transfer(sender, request, user, **kwargs):
+    cart, created = Cart.objects.get_or_create(session_id=request.session.session_key, user=None)
+    orders = ProductOrder.objects.filter(cart=cart)
+    cart.user = user
+    cart.save(update_fields=['user'])
+    orders.update(cart=cart)
+    for _item in orders:
+        _item.save()
