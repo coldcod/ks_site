@@ -37,10 +37,11 @@ class ProductOrder(models.Model):
 
 @receiver(user_logged_in)
 def session_to_user_transfer(sender, request, user, **kwargs):
-    cart, created = Cart.objects.get_or_create(session_id=request.session.session_key, defaults={'session_id': request.session.session_key})
-    orders = ProductOrder.objects.filter(cart=cart)
-    cart.user = user
-    cart.save(update_fields=['user'])
-    orders.update(cart=cart)
-    for _item in orders:
+    try:
+        cart = Cart.objects.filter(session_id=request.session.session_key)
+    except:
+        cart = Cart.objects.create(session_id=request.session.session_key, user=request.user)
+    cart.update(user=request.user)
+    for _item in cart:
         _item.save()
+    orders = ProductOrder.objects.filter(cart__user=request.user)
