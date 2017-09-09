@@ -12,6 +12,13 @@ from django.http import HttpResponse
 from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
 
+import sys
+sys.path.append('../')
+from store.models import Product
+
+from cart.models import Cart, ProductOrder
+
+
 # Create your views here.
 
 def xyz(req):
@@ -20,9 +27,11 @@ def xyz(req):
     return HttpResponse(str(req.user.is_anonymous) + str(req.user.email) + "<br><a href='/accounts/abc/'>abc</a>")
 
 def abc(req):
-    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
-    x = "True Bool" if boolean else "False Bool"
-    return HttpResponse(x)
+    req.session.save()
+    '''boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+    cart, created = Cart.objects.get_or_create(user=req.user, defaults={'session_id': req.session.session_key, 'user': req.user}) if boolean else Cart.objects.get_or_create(session_id=req.session.session_key, defaults={'session_id': req.session.session_key})
+    cart.save()'''
+    return HttpResponse(str(req.session.session_key))
 
 def index(req):
     return render(req, 'accounts/index.html')
