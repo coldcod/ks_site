@@ -11,6 +11,7 @@ def index(req):
     else:
         latest_products = Product.objects.order_by('-pubdate')
     categories = Product.objects.all().values_list('category', flat=True)
+    categories = list(set(categories))
     context = {
         'latest_products': latest_products,
         'cart_info': orders,
