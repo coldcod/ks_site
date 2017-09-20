@@ -6,10 +6,15 @@ from get_cart_kssite import get_cart
 
 def index(req):
     orders = get_cart.get_cart_info(req)
-    latest_products = Product.objects.order_by('-pubdate')
+    if (req.GET):
+        latest_products = Product.objects.filter(category=req.GET.get('category').title())
+    else:
+        latest_products = Product.objects.order_by('-pubdate')
+    categories = Product.objects.all().values_list('category', flat=True)
     context = {
         'latest_products': latest_products,
         'cart_info': orders,
+        'categories': categories,
     }
     return render(req, 'store/index.html', context)
 

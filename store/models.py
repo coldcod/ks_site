@@ -16,7 +16,7 @@ class Product(models.Model):
     img = models.ImageField(null=True, blank=True)
     pubdate = models.DateTimeField(default=timezone.now)
     stock = models.IntegerField(default=2)
-    category = models.CharField(max_length=200, default='')
+    category = models.CharField(max_length=200)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
     def __str__(self):
         return self.title
@@ -25,6 +25,7 @@ class Product(models.Model):
         hash_pid = pid.make_token(self)
         self.pid = hash_pid
         self.title = self.title.title()
+        self.category = self.category.title()
         super(Product, self).save(*args, **kwargs)
 
 class ProductImages(models.Model):

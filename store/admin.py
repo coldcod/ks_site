@@ -8,10 +8,10 @@ class ProductImagesInline(admin.TabularInline):
     extra = 5
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'price', 'stock', 'pubdate', 'pid']
+    list_display = ['title', 'price', 'stock', 'pubdate', 'pid', 'category']
     list_filter = ['pubdate']
     inlines = [ProductImagesInline]
-    fields = ['description', 'title', 'price', 'daysBeforeShipping', 'img', 'stock']
+    fields = ['description', 'title', 'category','price', 'daysBeforeShipping', 'img', 'stock']
     #list_display = ['image']
 
 admin.site.register(Product, ProductAdmin)

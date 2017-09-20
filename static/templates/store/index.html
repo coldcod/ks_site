@@ -3,6 +3,20 @@
 
 {% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
 
+<ul>
+    Filter:
+    <ul>
+        <li>Categories:
+            <ul>
+            {% for category in categories %}
+                <li><a href="/store?category={{category}}">{{category}}</a></li>
+            {% endfor %}
+            <li><a href="/store/">None</a></li>
+        </ul>
+        </li>
+    </ul>
+</ul>
+
 {% if latest_products %}
     <ul>
         {% for product in latest_products %}
