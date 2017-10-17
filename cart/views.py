@@ -37,29 +37,37 @@ def cart(req):
 
 def addressFilledBuyout(req, pid):
     if req.method == 'POST':
-        address = req.POST.get("address", "")
-        req.user.profile.address = address
+        req.user.profile.address = req.POST.get("address", '')
+        req.user.first_name = req.POST.get("first_name", '')
+        req.user.last_name = req.POST.get("last_name", '')
         req.user.profile.save()
         req.user.save()
-        return redirect('/cart/confirmed/'+pid)
+    return redirect('/cart/confirmed/'+pid+'/')
 
 def buy(req, pid):
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean is not True:
         return redirect('/accounts/login?p=' + pid)
     elif boolean:
-        address_not_filled = False
-        if Profile.objects.get(id=req.user.id).address == '':
-            address_not_filled = True
+        address_not_filled = req.user.profile.address == ''
+        first_name_not_filled = req.user.first_name == ''
+        last_name_not_filled = req.user.last_name == ''
         product = Product.objects.get(pid=pid)
         usr = req.user
-        return render(req, 'cart/buy.html', {'product': product, 'usr': usr, 'address_not_filled': address_not_filled})
+        context = {
+            'usr': usr,
+            'product': product,
+            'address_not_filled': address_not_filled,
+            'first_name_not_filled': first_name_not_filled,
+            'last_name_not_filled': last_name_not_filled
+        }
+        return render(req, 'cart/buy.html', context)
 
 def confirmed(req, pid):
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
-    if boolean and req.user.email and Profile.objects.get(id=req.user.id).address is not '':
+    if boolean and req.user.email and req.user.profile.address is not '' and req.user.first_name is not '' and req.user.last_name is not '':
         # To MANAGEMENT
-        subject = "[ORDER]" + str(Product.objects.get(pid=pid).title)
+        subject = "[ORDER] " + str(Product.objects.get(pid=pid).title)
         html_content = render_to_string('cart/order.html', {'usr': req.user, 'prod': Product.objects.get(pid=pid)})
         text_content = strip_tags(html_content)
         _from = "satwindersapra@gmail.com"
@@ -86,4 +94,4 @@ def confirmed(req, pid):
         return render(req, 'cart/placed.html', {'prod': Product.objects.get(pid=pid)})
 
     else:
-        return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>) and try placing your order again.")
+        return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>), have filled out your first and last name as well as address (<a class='text_links' href='/accounts/settings/'>Settings</a>) and try placing your order again.")

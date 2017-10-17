@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+# Apparently if APPEND_SLASH is set to False then only django will accept POST data to URLs ending without a trailing slash (.../). So convenient.
+# The property created by the satan worshippers themselves will return a 404 whenever user tries to access a URL with a trailing slash. But some others times it won't. Don't touch, hazardous.
+#APPEND_SLASH=False
+
 # Directory which will store user-uploaded media and files
 MEDIA_ROOT = 'store/static/store/'
 MEDIA_URL = '/static/store/'
