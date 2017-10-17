@@ -19,5 +19,6 @@
 {% endfor %}
 <h3>{{product.description}}</h4>
 <h4>Rs. {{product.price}} | Shipped out in {{ product.daysBeforeShipping }} days.</h4>
-<a class="text_links" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a>
-<a class="text_links" href="/cart/remove-from-cart/{{product.pid}}">Remove from cart</a>
+<a class="text_links" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a> /
+<a class="text_links" href="/cart/remove-from-cart/{{product.pid}}">Remove from cart</a> /
+<a class="text_links" href="/cart/buy/{{product.pid}}">Buy Now</a>

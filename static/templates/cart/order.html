@@ -1,0 +1,19 @@
+{% if prod and usr %}
+
+    [ORDER] [Quantity = 1 (one)]<br>
+    <hr>
+    Product - <br>
+    <span style="left: 5px;">
+        Title - {{prod.title}}<br>
+        Total Amounted - {{prod.price}}<br>
+        Category - {{prod.category}} <br>
+    </span>
+    <hr>
+    Buyer - <br>
+    <span style="left: 5px;">
+        Email - {{usr.email}}<br>
+        First Name - {{usr.first_name}}<br>
+        Last Name - {{usr.last_name}}<br>
+    </span>
+
+{% endif %}

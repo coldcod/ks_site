@@ -1,0 +1,11 @@
+{% if product %}
+
+    Product - {{product.title}} <br>
+    Total - {{product.price}} <br>
+    Quantity - 1 <br>
+    <br>
+    Billing Information - <br>
+    Name - {{usr.username}} <br> <br>
+    <a href="/cart/confirmed/{{product.pid}}">Buy Now</a>
+
+{% endif %}

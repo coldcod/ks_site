@@ -6,5 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^add-to-cart/(?P<pid>[0-9A-Za-z]+-[0-9A-Za-z]{1,20})/$', views.add_to_cart, name='cart-add'),
     url(r'^remove-from-cart/(?P<pid>[0-9A-Za-z]+-[0-9A-Za-z]{1,20})/$', views.remove_from_cart, name='cart-remove'),
+    url(r'^buy/(?P<pid>[0-9A-Za-z]+-[0-9A-Za-z]{1,20})/$', views.buy, name='buy_now'),
+    url(r'^confirmed/(?P<pid>[0-9A-Za-z]+-[0-9A-Za-z]{1,20})/$', views.confirmed, name='singleOrderConfirmed'),
     url(r'^$', views.cart, name='cart-info')
 ]
