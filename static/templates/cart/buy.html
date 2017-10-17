@@ -6,6 +6,18 @@
     <br>
     Billing Information - <br>
     Name - {{usr.username}} <br> <br>
-    <a href="/cart/confirmed/{{product.pid}}">Buy Now</a>
+
+    {% if address_not_filled %}
+
+        <form action="/cart/addressFilledBuyout/{{product.pid}}" method="post">
+            Address: <input type="text" name="address"><br>
+            <input type="submit" name="submit" value="Buy Now">
+        </form>
+
+    {% else %}
+
+        <a href="/cart/confirmed/{{product.pid}}">Buy Now</a>
+
+    {% endif %}
 
 {% endif %}

@@ -8,6 +8,7 @@ from django.utils.html import strip_tags
 import sys
 sys.path.append('../')
 from store.models import Product
+from accounts.models import Profile
 
 # Create your views here.
 
@@ -34,18 +35,29 @@ def cart(req):
     }
     return render(req, 'cart/cart-info.html', context)
 
+def addressFilledBuyout(req, pid):
+    if req.method == 'POST':
+        address = req.POST.get("address", "")
+        req.user.profile.address = address
+        req.user.profile.save()
+        req.user.save()
+        return redirect('/cart/confirmed/'+pid)
+
 def buy(req, pid):
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean is not True:
         return redirect('/accounts/login?p=' + pid)
     elif boolean:
+        address_not_filled = False
+        if Profile.objects.get(id=req.user.id).address == '':
+            address_not_filled = True
         product = Product.objects.get(pid=pid)
         usr = req.user
-        return render(req, 'cart/buy.html', {'product': product, 'usr': usr})
+        return render(req, 'cart/buy.html', {'product': product, 'usr': usr, 'address_not_filled': address_not_filled})
 
 def confirmed(req, pid):
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
-    if boolean and req.user.email:
+    if boolean and req.user.email and Profile.objects.get(id=req.user.id).address is not '':
         # To MANAGEMENT
         subject = "[ORDER]" + str(Product.objects.get(pid=pid).title)
         html_content = render_to_string('cart/order.html', {'usr': req.user, 'prod': Product.objects.get(pid=pid)})
