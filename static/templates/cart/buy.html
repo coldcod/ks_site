@@ -10,7 +10,7 @@
 
     {% if address_not_filled or first_name_not_filled or last_name_not_filled %}
 
-        <form action="/cart/addressFilledBuyout/{{product.pid}}/" method="post">
+        <form action="/cart/addressFilledBuyout?p={{product.pid}}/" method="post">
             {% csrf_token %}
             Address: <input type="text" name="address" value="{{usr.profile.address}}"><br>
             {% if usr.first_name == '' or usr.last_name == '' %}
@@ -24,7 +24,8 @@
 
         Address - {{usr.profile.address}}<br>
         First Name - {{usr.first_name}} <br>
-        Last Name - {{usr.last_name}}<br>
+        Last Name - {{usr.last_name}}<br><br>
+        <a href="/cart/addressFilledBuyout?p={{product.pid}}/" class="text_links">Buy Now</a>
 
     {% endif %}
 

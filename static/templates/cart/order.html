@@ -1,4 +1,4 @@
-{% if prod and usr %}
+{% if prod is not '' and usr %}
 
     [ORDER] [Quantity = 1 (one)]<br>
     <hr>
@@ -8,13 +8,30 @@
         Total Amounted - {{prod.price}}<br>
         Category - {{prod.category}} <br>
     </span>
-    <hr>
-    Buyer - <br>
-    <span style="left: 5px;">
-        Email - {{usr.email}}<br>
-        First Name - {{usr.first_name}}<br>
-        Last Name - {{usr.last_name}}<br>
-        Address - {{usr.profile.address}}
-    </span>
+
+{% else %}
+
+    [ORDER] [Quantity = {{orders.count}}]<br>
+    <ol>
+
+        {% for order in orders.orders %}
+
+            <li>
+                Product - {{order.product.title}} - Rs. {{order.product.price}}, Quantity - {{order.quantity}}
+            </li>
+
+        {% endfor %}
+
+    </ol>
+    <br>
+    Total Amount - {{orders.total}}<br>
 
 {% endif %}
+<hr>
+Buyer - <br>
+<span style="left: 5px;">
+    Email - {{usr.email}}<br>
+    First Name - {{usr.first_name}}<br>
+    Last Name - {{usr.last_name}}<br>
+    Address - {{usr.profile.address}}
+</span>
