@@ -115,6 +115,7 @@ def confirmed(req):
 
         if prod is '':
             cart = get_cart(req)
+            cart.status = 1
             for order in orders['orders']:
                 cart._remove(order.product.pid)
 

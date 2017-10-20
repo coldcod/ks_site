@@ -14,6 +14,8 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     session_id = models.CharField(default='', max_length=500, null=True)
     order_date = models.DateTimeField(default=timezone.now)
+    # 1 for en route, 0 for delivered, -1 for not ordered yet
+    status = models.IntegerField(default=-1)
     def _add(self, pid):
         product = Product.objects.get(pid=pid)
         order, created = ProductOrder.objects.get_or_create(product=product, cart=self)
