@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import sys
 sys.path.append('../')
+from cart.models import Cart
 from store.models import Product
 from accounts.models import Profile
 
@@ -113,9 +114,8 @@ def confirmed(req):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        if prod is '':
+        if prod is '' or prod is None:
             cart = get_cart(req)
-            cart.status = 1
             for order in orders['orders']:
                 cart._remove(order.product.pid)
 

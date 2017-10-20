@@ -30,6 +30,9 @@ class Cart(models.Model):
         except:
             pass
 
+    def __str__(self):
+        return str(self.user.first_name+"-"+self.user.last_name+"-"+self.user.email)
+
 class ProductOrder(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)

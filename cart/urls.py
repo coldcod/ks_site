@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^buy/$', views.buy, name='buy_now'),
     url(r'^confirmed/$', views.confirmed, name='singleOrderConfirmed'),
     url(r'^addressFilledBuyout/$', views.addressFilledBuyout, name='addressFilledBuyout'),
+    #url(r'^history/$', views.history, name='history'),
     url(r'^$', views.cart, name='cart-info')
 ]
