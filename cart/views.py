@@ -49,7 +49,7 @@ def addressFilledBuyout(req):
         req.user.last_name = req.POST.get("last_name", '')
         req.user.profile.save()
         req.user.save()
-    pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else ''
+    pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
     return redirect('/cart/confirmed'+pid)
 
 def buy(req):
@@ -73,13 +73,17 @@ def buy(req):
         return render(req, 'cart/buy.html', context)
 
 def confirmed(req):
-    pid = req.GET.get('p').replace('/', '') if req.GET.get('p') is not '' or req.GET.get('p') is not None else None
+    pid = req.GET.get('p' '')
+    '''if req.GET.get('p') is not '' or req.GET.get('p') is not NoneType:
+        pid = req.GET.get('p').replace('/', '')
+    else:
+        pid = None'''
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean and req.user.email and req.user.profile.address is not '' and req.user.first_name is not '' and req.user.last_name is not '':
         # To MANAGEMENT
-        subject = "[ORDER] " + str(Product.objects.get(pid=pid).title) if pid else "[ORDER] Various Products"
-        prod = Product.objects.get(pid=pid) if pid else ''
-        orders = '' if pid else get_cart_info(req)
+        subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
+        prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
+        orders = None if pid is not '' and pid is not None else get_cart_info(req)
         context = {
             'usr': req.user,
             'prod': prod,
@@ -94,7 +98,7 @@ def confirmed(req):
         msg.send()
 
         # To CUSTOMER
-        subject = "[Order Received] " + str(Product.objects.get(pid=pid).title) if pid else "[Order Received] Various Products"
+        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
         context = {
             'no_err': True,
             'usr': req.user,

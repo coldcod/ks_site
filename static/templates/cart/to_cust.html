@@ -2,9 +2,9 @@
 
     Dear {{usr.first_name}} {{usr.last_name}}, {{usr.email}}, <br>
     <br>
-    {% if prod is not '' %}
+    {% if prod and prod is not '' %}
         Your order for {{prod.title}} has been received and will be processed as soon as possible to be sent to the following address:<br>
-    {% elif orders is not '' and prod is '' %}
+    {% elif orders and orders is not '' %}
         Your order for the following products has been received and will be processed as soon as possible to be sent to the following address:<br>
         <ol>
             {% for order in orders.orders %}

@@ -2,12 +2,15 @@ from django.shortcuts import render
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
@@ -42,40 +45,51 @@ def settings(req):
         if form.is_valid():
             user = req.user
             user.refresh_from_db()
-            user.profile.cc = form.cleaned_data.get('cc')
-            user.profile.address = form.cleaned_data.get('address')
+            user.profile.cc = req.POST.get('cc')
+            user.profile.address = req.POST.get('address')
+            user.first_name = req.POST.get('first_name')
+            user.last_name = req.POST.get('last_name')
             user.profile.save()
             user.save()
             success_message = "Settings were successfuly saved."
     else:
         form = ProfileForm()
         success_message = None
-    return render(req, 'accounts/settings.html', {'form': form, 'success_message': success_message})
+    return render(req, 'accounts/settings.html', {'user': req.user, 'success_message': success_message})
+
+def send_activation_email(req):
+    instance = req.user
+    current_site = get_current_site(req)
+    # --- #
+    message = render_to_string('accounts/activate_account_email.html', {
+        'user': instance,
+        'domain': current_site.domain,
+        # user.pk a.k.a user.id
+        'uid': urlsafe_base64_encode(force_bytes(instance.pk)),
+        'token': account_activation_token.make_token(instance),
+    })
+    msg = EmailMultiAlternatives("Activate KS_Mart account", message, "satwindersapra@gmail.com", [instance.email])
+    msg.send()
+    return redirect('account_activation_sent')
 
 def signup(req):
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            raw_psswd = form.cleaned_data.get('password2')
-            email = form.cleaned_data.get('email')
-            instance.username = email
-            instance.save()
-            instance.profile.email_confirmed = False
-            login(req, instance)
-            instance.profile.save()
-            instance.save()
-            current_site = get_current_site(req)
-            message = render_to_string('accounts/activate_account_email.html', {
-                'user': instance,
-                'domain': current_site.domain,
-                # user.pk a.k.a user.id
-                'uid': urlsafe_base64_encode(force_bytes(instance.pk)),
-                'token': account_activation_token.make_token(instance),
-            })
-            instance.email_user('Activate KS_Site Account', message)
+            try:
+                instance = form.save(commit=False)
+                raw_psswd = form.cleaned_data.get('password2')
+                email = form.cleaned_data.get('email')
+                instance.username = email
+                instance.save()
+                instance.profile.email_confirmed = False
+                login(req, instance)
+                instance.profile.save()
+                instance.save()
 
-            return redirect('account_activation_sent')
+                return redirect('send_activation_email')
+            except Exception as e:
+                return render(req, 'accounts/signup.html', {'form': form, 'tm': "Username already exists."})
     else:
         form = SignUpForm()
     return render(req, 'accounts/signup.html', {'form': form})

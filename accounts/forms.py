@@ -14,8 +14,10 @@ class SignUpForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     address = forms.CharField(max_length=600)
     cc = forms.CharField(max_length=200)
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=60)
 
     class Meta:
         model = User
         exclude = ['email_confirmed',]
-        fields = ['cc', 'address',]
+        fields = ['cc', 'address', 'first_name', 'last_name',]

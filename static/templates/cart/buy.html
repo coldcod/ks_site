@@ -1,4 +1,4 @@
-{% if product %}
+{% if product and usr.profile.email_confirmed %}
 
     Product - {{product.title}} <br>
     Total - {{product.price}} <br>
@@ -28,5 +28,9 @@
         <a href="/cart/addressFilledBuyout?p={{product.pid}}/" class="text_links">Buy Now</a>
 
     {% endif %}
+
+{% elif usr.profile.email_confirmed is not True %}
+
+    <span style="color: rgb(131, 32, 32);">Your account has not been activated yet. Please check your inbox to activate before buying, or <a class="text_links" href="/accounts/send_activation_email/">resend activation email</a></span>
 
 {% endif %}

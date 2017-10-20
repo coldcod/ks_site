@@ -7,6 +7,9 @@
 
 {% block content %}
   <h2>Sign up</h2>
+  {% if tm %}
+    <span style="color: rgb(125, 6, 6);">{{tm}}</span>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
     {% for field in form %}

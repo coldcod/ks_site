@@ -6,19 +6,12 @@
   {% endif %}
   <form method="post">
     {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-            <br><small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
+    CC: <br><input type="text" name="cc" value="{{user.profile.cc}}"><br><br>
+    Address: <br><input type="text" name="address" value="{{user.profile.address}}"><br><br>
+    First Name: <br><input type="text" name="first_name" value="{{user.first_name}}"><br><br>
+    Last Name: <br><input type="text" name="last_name" value="{{user.last_name}}"><br>
     <br><button type="submit">Save</button>
   </form>
+  <a class="text_links" href="/accounts/send_activation_email/">Resend activation email</a><br>
   <a href="/accounts/logout">Logout</a>
 {% endblock %}
