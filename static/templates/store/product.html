@@ -18,7 +18,11 @@
     <img src="{%static 'store/'%}{{image}}" height=150>
 {% endfor %}
 <h3>{{product.description}}</h4>
-<h4>Rs. {{product.price}} | Shipped out in {{ product.daysBeforeShipping }} days.</h4>
+{% if product.discount_in_percent > 0 %}
+    <h4>{{product.discount_in_percent}}% off - <span style="color: rgb(153, 16, 16);"><s>Rs. {{product.og_price}}</s></span> Rs. {{product.price}}</h4>
+{% else %}
+    <h4>Rs. {{product.price}}</h4>
+{% endif %}
 <a class="text_links" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a> /
 <a class="text_links" href="/cart/remove-from-cart/{{product.pid}}">Remove from cart</a> /
 <a class="text_links" href="/cart/buy?p={{product.pid}}">Buy Now</a>
