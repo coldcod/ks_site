@@ -1,7 +1,7 @@
 ul.products li {
     display: inline-block;
     vertical-align: top;
-    margin-right: 2%;
+    margin-right: 1.2%;
 }
 
 ul.products .price-r {
@@ -22,6 +22,12 @@ ul.products .price-r {
 
 .title {
     font-size: 105%;
+}
+
+.leftcol {
+    float: left;
+    margin-right: 5%;
+    height: 100%;
 }
 
 .notes {
