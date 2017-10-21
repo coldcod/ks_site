@@ -46,7 +46,7 @@ ul.products img {
 
 @media screen and (max-width: 1024px) {
     ul.products img {
-         height: 15%;
+        height: 10%;
     }
 }
 
