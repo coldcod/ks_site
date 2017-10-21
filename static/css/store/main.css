@@ -1,0 +1,27 @@
+ul.products li {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 5%;
+}
+
+/*ul.products {
+    columns: 4;
+}*/
+
+ul.products img {
+    height: 20%;
+}
+
+/*ul.products{
+    margin: 0 auto;
+    text-align: center;
+}
+
+ul.products img {
+    height: 20%;
+}
+
+ul.products li {
+    display: inline-block;
+    vertical-align: top;
+}*/

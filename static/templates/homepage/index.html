@@ -1,15 +1,25 @@
 {%load static%}
 <head>
     <link rel="stylesheet" type="text/css" href="{%static 'css/'%}wired_links.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homepage/' %}main.css">
 </head>
 <center>
-    <h1 style="top: 50%;">KS-SITE</h1><br>
-    {% for item in items %}
-        <a class="text_links" style="" href="{{item.link}}">
-            {{item.content}}
-        </a>
-        {% if item.content != 'Store' %}
-            <pre>  -  </pre>
-        {% endif %}
-    {% endfor %}
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+
+                <h1><span id="kssite">KS-SITE</span></h1>
+                <br>
+                {% for item in items %}
+                    <a class="text_links" style="" href="{{item.link}}">
+                        {{item.content}}
+                    </a>
+                    {% if item.content != 'Store' %}
+                        &nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
 </center>

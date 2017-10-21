@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{%static 'css/'%}wired_links.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/store/' %}main.css">
 
 {% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
 
@@ -16,13 +17,14 @@
         </li>
     </ul>
 </ul>
-
-{% if latest_products %}
-    <ul>
-        {% for product in latest_products %}
-            <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br><span class="text_links" style="text-decoration: none;">{{product.title}} - Rs. {{product.price}}</span></a><br><br>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h1>No Products Available.</h1>
-{% endif %}
+<center>
+    {% if latest_products %}
+        <ul class="products">
+            {% for product in latest_products %}
+                <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br><span class="text_links" style="text-decoration: none;">{{product.title}} - Rs. {{product.price}}</span></a><br><br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No Products Available.</h1>
+    {% endif %}
+</center>
