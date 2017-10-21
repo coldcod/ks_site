@@ -3,5 +3,7 @@ ks_site/*.py~
 store/*.pyc
 store/*.py~
 static/store/*.jpg
+store/static/store/*
 static/store/*.png
 static/store/*.JPG
+ks_site/settings.py

@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.views.decorators.csrf import csrf_exempt
 import sys
 sys.path.append('../')
 from cart.models import Cart
@@ -52,26 +53,6 @@ def addressFilledBuyout(req):
         req.user.save()
     pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
     return redirect('/cart/confirmed'+pid)
-
-def buy(req):
-    pid = req.GET.get('p', '')
-    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
-    if boolean is not True:
-        return redirect('/accounts/login?p=' + pid)
-    elif boolean:
-        address_not_filled = req.user.profile.address == ''
-        first_name_not_filled = req.user.first_name == ''
-        last_name_not_filled = req.user.last_name == ''
-        product = Product.objects.get(pid=pid)
-        usr = req.user
-        context = {
-            'usr': usr,
-            'product': product,
-            'address_not_filled': address_not_filled,
-            'first_name_not_filled': first_name_not_filled,
-            'last_name_not_filled': last_name_not_filled
-        }
-        return render(req, 'cart/buy.html', context)
 
 def confirmed(req):
     pid = req.GET.get('p' '')
@@ -123,3 +104,24 @@ def confirmed(req):
 
     else:
         return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>), have filled out your first and last name as well as address (<a class='text_links' href='/accounts/settings/'>Settings</a>) and try placing your order again.")
+
+@csrf_exempt
+def buy(req):
+    pid = req.GET.get('p', '')
+    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+    if boolean is not True:
+        return redirect('/accounts/login?p=' + pid)
+    elif boolean:
+        address_not_filled = req.user.profile.address == ''
+        first_name_not_filled = req.user.first_name == ''
+        last_name_not_filled = req.user.last_name == ''
+        product = Product.objects.get(pid=pid)
+        usr = req.user
+        context = {
+            'usr': usr,
+            'product': product,
+            'address_not_filled': address_not_filled,
+            'first_name_not_filled': first_name_not_filled,
+            'last_name_not_filled': last_name_not_filled
+        }
+        return render(req, 'cart/buy.html', context)

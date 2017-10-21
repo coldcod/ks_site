@@ -52,6 +52,8 @@ def settings(req):
             user.profile.save()
             user.save()
             success_message = "Settings were successfuly saved."
+        else:
+            success_message = "Form was rendered invalid. Please fill the form with appropriate information."
     else:
         form = ProfileForm()
         success_message = None

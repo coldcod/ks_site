@@ -99,7 +99,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'coldcod',
-        'USER': 'coldcod',
+        'USER': 'satwinderpal',
         'PASSWORD': 'macbook',
         'HOST': 'localhost',
         'PORT': '5432',
