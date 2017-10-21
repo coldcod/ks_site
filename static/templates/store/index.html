@@ -1,5 +1,4 @@
 {% load static %}
-<link rel="stylesheet" href="{%static 'css/'%}wired_links.css">
 <link rel="stylesheet" type="text/css" href="{% static 'css/store/' %}main.css">
 
 {% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
@@ -21,7 +20,17 @@
     {% if latest_products %}
         <ul class="products">
             {% for product in latest_products %}
-                <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br><span class="text_links" style="text-decoration: none;">{{product.title}} - Rs. {{product.price}}</span></a><br><br>
+                <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br>
+                    <span class="title">{{product.title}}</span><br>
+                    {% if product.notes is not None and product.notes is not '' %}
+                        <span class="notes">{{product.notes}}</span><br>
+                    {% endif %}
+                    <span class="price price-r">₹{{product.price}}</span>&nbsp;
+                    {% if product.discount_in_percent is not 0 %}
+                        <span class="price_og price-r"><s>₹{{product.og_price}}</s></span>&nbsp;
+                        <span class="discount price-r">{{product.discount_in_percent}}% off</span>
+                    {% endif %}
+                </a><br><br>
             {% endfor %}
         </ul>
     {% else %}

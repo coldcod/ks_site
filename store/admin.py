@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'discount_in_percent','stock', 'pubdate', 'pid', 'category']
     list_filter = ['pubdate']
     inlines = [ProductImagesInline]
-    fields = ['description', 'title', 'category', 'price', 'discount_in_percent','daysBeforeShipping', 'img', 'stock']
+    fields = ['description', 'title', 'category', 'price', 'notes','discount_in_percent','daysBeforeShipping', 'img', 'stock']
     #list_display = ['image']
 
 admin.site.register(Product, ProductAdmin)

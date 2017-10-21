@@ -1,15 +1,47 @@
 ul.products li {
     display: inline-block;
     vertical-align: top;
-    margin-right: 5%;
+    margin-right: 2%;
+}
+
+ul.products .price-r {
+    font-size: 90%;
+}
+
+.price_og {
+    color: #878787;
+}
+
+.discount {
+    color: #3e9143;
 }
 
 /*ul.products {
     columns: 4;
 }*/
 
+.title {
+    font-size: 105%;
+}
+
+.notes {
+    font-size: 74%;
+    color: #878787;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
 ul.products img {
     height: 20%;
+}
+
+@media screen and (max-width: 1024px) {
+    ul.products img {
+         height: 15%;
+    }
 }
 
 /*ul.products{

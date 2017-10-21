@@ -19,6 +19,7 @@ class Product(models.Model):
     stock = models.IntegerField(default=2)
     category = models.CharField(max_length=200)
     discount_in_percent = models.IntegerField(default=0)
+    notes = models.CharField(max_length=60, blank=True, null=True, default=None)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
     def __str__(self):
         return self.title
