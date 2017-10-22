@@ -27,14 +27,14 @@
         <ul class="products">
             {% for product in latest_products %}
                 <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br>
-                    <span class="title">{{product.title}}</span><br>
+                    <span class="title licnt">{{product.title}}</span><br>
                     {% if product.notes is not None and product.notes is not '' %}
-                        <span class="notes">{{product.notes}}</span><br>
+                        <span class="notes licnt">{{product.notes}}</span><br>
                     {% endif %}
-                    <span class="price price-r">₹{{product.price}}</span>&nbsp;
+                    <span class="price licnt">₹{{product.price}}</span>&nbsp;
                     {% if product.discount_in_percent is not 0 %}
-                        <span class="price_og price-r"><s>₹{{product.og_price}}</s></span>&nbsp;
-                        <span class="discount price-r">{{product.discount_in_percent}}% off</span>
+                        <span class="price_og price-r licnt"><s>₹{{product.og_price}}</s></span>&nbsp;
+                        <span class="discount price-r licnt">{{product.discount_in_percent}}% off</span>
                     {% endif %}
                 </a><br><br>
             {% endfor %}

@@ -28,9 +28,9 @@ def cart(req):
     user_cart = get_user_cart(req)
     session_cart = get_session_cart(req)
     cart_info = get_cart_info(req)
-    address_not_filled = req.user.profile.address == ''
-    first_name_not_filled = req.user.first_name == ''
-    last_name_not_filled = req.user.last_name == ''
+    address_not_filled = req.user.profile.address == '' if req.user.is_authenticated() else ''
+    first_name_not_filled = req.user.first_name == '' if req.user.is_authenticated() else ''
+    last_name_not_filled = req.user.last_name == '' if req.user.is_authenticated() else ''
     context = {
         'user_cart': user_cart,
         'session_cart': session_cart,
@@ -40,7 +40,8 @@ def cart(req):
         'address_not_filled': address_not_filled,
         'first_name_not_filled': first_name_not_filled,
         'last_name_not_filled': last_name_not_filled,
-        'usr': req.user
+        'usr': req.user,
+        'authenticated': req.user.is_authenticated()
     }
     return render(req, 'cart/cart-info.html', context)
 
