@@ -4,12 +4,12 @@ ul.products li {
     margin-right: 1.2%;
     margin-top: 1.2%;
     border-radius: 4px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 2.5px 10px 0 rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.2s ease-in-out;
 }
 
 ul.products li:hover {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.15);
     transition: box-shadow 0.2s ease-in-out;
 }
 
@@ -32,11 +32,20 @@ ul.products .price-r {
 
 .products_list {
     margin-left: 25%;
+    margin-top: 5%;
 }
 
 /*ul.products {
     columns: 4;
 }*/
+
+#myNavbar a {
+    color: white;
+}
+
+#myNavbar {
+    background-color: rgb(0, 35, 80);
+}
 
 .title {
     font-size: 109%;
@@ -49,7 +58,7 @@ ul.products .price-r {
 .leftcol {
     float: left;
     margin-right: 5%;
-    margin-top: 2.5%;
+    margin-top: 0.9%;
     border-style: solid;
     border-color: rgb(175, 9, 9);
     border-right: 0px;
@@ -60,6 +69,25 @@ ul.products .price-r {
     margin-left: 0px;
     position: relative;
 }
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    margin-left: 0%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 1% 1%;
+    text-decoration: none;
+}
+
 
 .notes {
     font-size: 74%;

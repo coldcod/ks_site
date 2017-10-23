@@ -1,10 +1,13 @@
 {% block content %}
-    {% if orders %}
+    {% if count and total %}
         <a href="/cart/">
-            <div class="cart">
-                Items - {{count}}
-                Amount - {{total}}
-            </div>
+            Items - {{count}}
+            Amount - {{total}}
+        </a>
+    {% else %}
+        <a href="/cart/">
+            Items - 0
+            Amount - 0
         </a>
     {% endif %}
 {% endblock %}

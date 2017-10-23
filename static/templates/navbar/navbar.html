@@ -1,0 +1,37 @@
+{% block content %}
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap 3 Fixed Layout Example</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/store/' %}main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+    	<!-- Brand and toggle get grouped for better mobile display -->
+    	<div class="container">
+    		<div class="navbar-header">
+    			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+    				<span class="sr-only">Toggle navigation</span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    			</button>
+    		</div>
+    		<!-- Collect the nav links, forms, and other content for toggling -->
+    		<div class="collapse navbar-collapse" id="navbarCollapse">
+    			<ul class="nav navbar-nav">
+    				<li class="logo-nav"><a href="/" target="_blank">KS-SITE</a></li>
+                    <li class="active store-nav"><a href="/store/" target="_blank">Store</a></li>
+    				<li class="login-nav"><a href="/accounts/login/" target="_blank">Login</a></li>
+    				<li class="signup-nav"><a href="/accounts/signup/" target="_blank">Signup</a></li>
+                    <li class="cart-nav"><a href="/cart/" target="_blank">{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}</a></li>
+    			</ul>
+    		</div>
+    	</div>
+    </nav>
+{% endblock %}
