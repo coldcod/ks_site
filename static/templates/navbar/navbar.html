@@ -4,11 +4,19 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Bootstrap 3 Fixed Layout Example</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{% static 'css/store/' %}main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // get current URL path and assign 'active' class
+                var pathname = window.location.pathname;
+                $('.nav > li > a[href="'+pathname+'"]').parent().addClass('active');
+            })
+        </script>
     </head>
     <div class="navbarMain">
         <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -21,16 +29,40 @@
         				<span class="icon-bar"></span>
         				<span class="icon-bar"></span>
         			</button>
+                    <a href="/" class="navbar-brand">KS-SITE</a>
         		</div>
         		<!-- Collect the nav links, forms, and other content for toggling -->
         		<div class="collapse navbar-collapse" id="navbarCollapse">
-        			<ul class="nav navbar-nav">
-        				<li class="logo-nav"><a href="/" target="_blank">KS-SITE</a></li>
-                        <li class="active store-nav"><a href="/store/" target="_blank">Store</a></li>
-        				<li class="login-nav"><a href="/accounts/login/" target="_blank">Login</a></li>
-        				<li class="signup-nav"><a href="/accounts/signup/" target="_blank">Signup</a></li>
-                        <li class="cart-nav"><a href="/cart/" target="_blank">{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}</a></li>
+        			<ul class="nav navbar-nav mr-auto">
+                        <li class="dropdown">
+                            <a href="/cart/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+        				<li class="login-nav"><a class="nav-link" href="/accounts/login/" target="_blank"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</a></li>
+        				<li class="signup-nav"><a class="nav-link" href="/accounts/signup/" target="_blank"><span class="glyphicon glyphicon-user"></span>&nbsp;Signup</a></li>
+                        <li class="cart-nav"><a class="nav-link navbar-right" href="/cart/" target="_blank">{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}</a></li>
         			</ul>
+                    <ul class="nav navbar-nav mr-auto pull-right navbar-right">
+                        <li class="cart2-nav pull-right navbar-right"><a href="/cart/" target="_blank" id="cart"><i class="glyphicon glyphicon-shopping-cart"></i> Cart <span class="badge">3 - ₹350</span></a></li>
+                    </ul>
+                    <div class="col-sm-3 col-md-3 pull-right">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-box" placeholder="Search" name="srch-term" id="srch-term">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
         		</div>
         	</div>
         </nav>

@@ -16,7 +16,6 @@ def index(req):
         'latest_products': latest_products,
         'cart_info': orders,
         'categories': categories,
-        'y': 0
     }
     return render(req, 'store/index.html', context)
 
