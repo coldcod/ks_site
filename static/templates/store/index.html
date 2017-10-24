@@ -12,33 +12,9 @@
 
 {% include 'navbar/navbar.html' %}
 
-<!--<nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-	Brand and toggle get grouped for better mobile display
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
-		 Collect the nav links, forms, and other content for toggling 
-		<div class="collapse navbar-collapse" id="navbarCollapse">
-			<ul class="nav navbar-nav">
-				<li class="logo-nav"><a href="/" target="_blank">KS-SITE</a></li>
-                <li class="active store-nav"><a href="/store/" target="_blank">Store</a></li>
-				<li class="login-nav"><a href="/accounts/login/" target="_blank">Login</a></li>
-				<li class="signup-nav"><a href="/accounts/signup/" target="_blank">Signup</a></li>
-                <li class="cart-nav"><a href="/cart/" target="_blank">{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>-->
-
 <div class="leftcol">
 
-    <ul>
+    <ul class="leftcol-ul">
         Filter:
         <ul>
             <li>Categories:
@@ -64,10 +40,10 @@
                     {% if product.notes is not None and product.notes is not '' %}
                         <span class="notes licnt">{{product.notes}}</span><br>
                     {% endif %}
-                    <span class="price licnt">₹{{product.price}}</span>&nbsp;
+                    <span class="price licnt all-pr">₹{{product.price}}</span>&nbsp;
                     {% if product.discount_in_percent is not 0 %}
-                        <span class="price_og price-r licnt"><s>₹{{product.og_price}}</s></span>&nbsp;
-                        <span class="discount price-r licnt">{{product.discount_in_percent}}% off</span>
+                        <span class="price_og price-r licnt all-pr"><s>₹{{product.og_price}}</s></span>&nbsp;
+                        <span class="discount price-r licnt all-pr">{{product.discount_in_percent}}% off</span>
                     {% endif %}
                 </a><br><br>
             {% endfor %}

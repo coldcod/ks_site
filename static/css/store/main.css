@@ -26,7 +26,7 @@ ul.products .price-r {
 }
 
 .licnt {
-    margin-left: 10px;
+    margin-left: 5%;
     margin-bottom: 5px;
 }
 
@@ -45,6 +45,9 @@ ul.products .price-r {
 
 #myNavbar {
     background-color: rgb(0, 35, 80);
+    display: inline-block;
+    overflow: hidden;
+    margin-bottom: 19%;
 }
 
 .title {
@@ -53,6 +56,10 @@ ul.products .price-r {
 
 .price {
     font-size: 95%;
+}
+
+.leftcol-ul {
+    list-style: upper-alpha;
 }
 
 .leftcol {
@@ -107,20 +114,39 @@ ul.products img {
 }
 
 @media screen and (max-width: 958px) {
-    ul.products img {
-        height: 25%;
-        border-radius: 5px;
+    .navbarMain {
+        margin-bottom: 21%;
     }
-    ul.products li {
-        display: block;
-        margin-left: 10%;
-        align-content: left;
+    .products_list ul {
+        padding: 0;
+        display: inline-block;
+        margin: 0;
+    }
+    .products_list {
+        text-align: center;
+        align-items: center;
+        margin: auto;
+    }
+    ul.products img {
+        height: 40%;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     }
     .leftcol {
         display: none;
     }
+    ul.products li {
+        margin-bottom: 10%;
+        display: inline-block;
+    }
     .title {
-        font-size: 150%;
+        font-size: 160%;
+    }
+    .notes {
+        font-size: 86%;
+    }
+    .all-pr {
+        font-size: 105%;
     }
 }
 
