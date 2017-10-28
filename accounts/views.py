@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from get_cart_kssite import get_cart
 
 from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
@@ -40,6 +41,9 @@ def index(req):
     return render(req, 'accounts/index.html')
 
 def settings(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
     if req.method == 'POST':
         form = ProfileForm(req.POST)
         if form.is_valid():
@@ -57,9 +61,21 @@ def settings(req):
     else:
         form = ProfileForm()
         success_message = None
-    return render(req, 'accounts/settings.html', {'user': req.user, 'success_message': success_message})
+    context = {
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
+        'user': req.user,
+        'success_message': success_message,
+    }
+    return render(req, 'accounts/settings.html', context)
 
 def send_activation_email(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
     instance = req.user
     current_site = get_current_site(req)
     # --- #
@@ -75,6 +91,9 @@ def send_activation_email(req):
     return redirect('account_activation_sent')
 
 def signup(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
@@ -94,7 +113,15 @@ def signup(req):
                 return render(req, 'accounts/signup.html', {'form': form, 'tm': "Username already exists."})
     else:
         form = SignUpForm()
-    return render(req, 'accounts/signup.html', {'form': form})
+    context = {
+        'form': form,
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
+    }
+    return render(req, 'accounts/signup.html', context)
 
 def activate(req, uid, token):
     uid = force_text(urlsafe_base64_decode(uid))
@@ -112,8 +139,21 @@ def activate(req, uid, token):
         return render(req, 'accounts/account_activation_invalid.html')
 
 def signout(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
     logout(req)
     return redirect("signup")
 
 def account_activation_sent(req):
-    return render(req, 'accounts/account_activation_sent.html')
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    context = {
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
+    }
+    return render(req, 'accounts/account_activation_sent.html', context)

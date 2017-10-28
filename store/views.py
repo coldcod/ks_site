@@ -15,16 +15,20 @@ def index(req):
         ).filter(search=req.GET.get('q'))
     else:
         latest_products = Product.objects.order_by('-pubdate')
-    categories = Product.objects.all().values_list('category', flat=True)
-    categories = list(set(categories))
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
     context = {
         'latest_products': latest_products,
-        'cart_info': orders,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
         'categories': categories,
+        'q': req.GET.get('q') is not None,
     }
     return render(req, 'store/index.html', context)
 
 def product_page(req, pid_url):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
     cart_info = get_cart.get_cart_info(req)
     product = Product.objects.get(pid=pid_url)
     top_message = req.GET.get('tm', '').replace('/', '')
@@ -33,5 +37,9 @@ def product_page(req, pid_url):
         'image_list': product.images.all(),
         'tm': top_message,
         'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
     }
     return render(req, 'store/product.html', context)

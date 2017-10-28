@@ -25,6 +25,9 @@ def remove_from_cart(req, pid):
     return redirect('/store/' + pid + '/?tm=Removed+from+cart/')
 
 def cart(req):
+    orders = get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart_info(req)
     user_cart = get_user_cart(req)
     session_cart = get_session_cart(req)
     cart_info = get_cart_info(req)
@@ -32,11 +35,13 @@ def cart(req):
     first_name_not_filled = req.user.first_name == '' if req.user.is_authenticated() else ''
     last_name_not_filled = req.user.last_name == '' if req.user.is_authenticated() else ''
     context = {
+        'cart_info': cart_info,
+        'categories': categories,
         'user_cart': user_cart,
         'session_cart': session_cart,
         'orders': cart_info['orders'],
-        'total': cart_info['total'],
-        'count': cart_info['count'],
+        'total': cart_info['total'] or 0,
+        'count': cart_info['count'] or 0,
         'address_not_filled': address_not_filled,
         'first_name_not_filled': first_name_not_filled,
         'last_name_not_filled': last_name_not_filled,
@@ -56,6 +61,9 @@ def addressFilledBuyout(req):
     return redirect('/cart/confirmed'+pid)
 
 def confirmed(req):
+    orders = get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart_info(req)
     pid = req.GET.get('p' '')
     '''if req.GET.get('p') is not '' or req.GET.get('p') is not NoneType:
         pid = req.GET.get('p').replace('/', '')
@@ -101,13 +109,23 @@ def confirmed(req):
             for order in orders['orders']:
                 cart._remove(order.product.pid)
 
-        return render(req, 'cart/placed.html', {'x': 'x'})
+        context = {
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': 0,
+            'count': 0,
+            'categories': categories,
+        }
+        return render(req, 'cart/placed.html', context)
 
     else:
         return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>), have filled out your first and last name as well as address (<a class='text_links' href='/accounts/settings/'>Settings</a>) and try placing your order again.")
 
 @csrf_exempt
 def buy(req):
+    orders = get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart_info(req)
     pid = req.GET.get('p', '')
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean is not True:
@@ -123,6 +141,11 @@ def buy(req):
             'product': product,
             'address_not_filled': address_not_filled,
             'first_name_not_filled': first_name_not_filled,
-            'last_name_not_filled': last_name_not_filled
+            'last_name_not_filled': last_name_not_filled,
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': orders['total'] or 0,
+            'count': orders['count'] or 0,
+            'categories': categories,
         }
         return render(req, 'cart/buy.html', context)

@@ -1,28 +1,41 @@
 {% load static %}
-<link rel="stylesheet" href="{%static 'css/'%}wired_links.css">
-<style>
-    h4 {
-        color: rgb(19, 163, 42);
-    }
-</style>
-{% include 'cart/cart-icon.html' with orders=cart_info.orders count=cart_info.count total=cart_info.total %}
+<head>
+    <title>{{product.title}} | The Decorista</title>
 
-{% if tm %}
-    <div class="top_message" style="background: rgb(25, 133, 46); color: white; width: 10%;">
-        <h3>{{tm}}</h3>
-    </div>
-{% endif %}
-<h1>{{product.title}}</h1><hr>
-<img src="{%static 'store/'%}{{product.img}}" height=150>
-{% for image in image_list %}
-    <img src="{%static 'store/'%}{{image}}" height=150>
-{% endfor %}
-<h3>{{product.description}}</h4>
-{% if product.discount_in_percent > 0 %}
-    <h4>{{product.discount_in_percent}}% off - <span style="color: rgb(153, 16, 16);"><s>Rs. {{product.og_price}}</s></span> Rs. {{product.price}}</h4>
-{% else %}
-    <h4>Rs. {{product.price}}</h4>
-{% endif %}
-<a class="text_links" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a> /
-<a class="text_links" href="/cart/remove-from-cart/{{product.pid}}">Remove from cart</a> /
-<a class="text_links" href="/cart/buy?p={{product.pid}}">Buy Now</a>
+    <link rel="stylesheet" href="{%static 'css/'%}wired_links.css">
+    <style>
+        h4 {
+            color: rgb(19, 163, 42);
+        }
+        .bodypart {
+            margin-top: 5%;
+        }
+    </style>
+    {% include 'navbar/navbar.html' %}
+
+</head>
+
+<div class="bodypart">
+
+    {% if tm %}
+        <div class="top_message" style="background: rgb(25, 133, 46); color: white; width: 100%;">
+            <h3>{{tm}}</h3>
+        </div><br>
+    {% endif %}
+    <h1>{{product.title}}</h1><hr>
+    <img src="{%static 'store/'%}{{product.img}}" height=150>
+    {% for image in image_list %}
+        <img src="{%static 'store/'%}{{image}}" height=150>
+    {% endfor %}
+    <h3>{{product.description}}</h4>
+    {% if product.discount_in_percent > 0 %}
+        <h4>{{product.discount_in_percent}}% off - <span style="color: rgb(153, 16, 16);"><s>Rs. {{product.og_price}}</s></span> Rs. {{product.price}}</h4>
+    {% else %}
+        <h4>Rs. {{product.price}}</h4>
+    {% endif %}
+    <a class="text_links" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a> /
+    <a class="text_links" href="/cart/remove-from-cart/{{product.pid}}">Remove from cart</a> /
+    <a class="text_links" href="/cart/buy?p={{product.pid}}">Buy Now</a>
+
+
+</div><br><br>

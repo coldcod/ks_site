@@ -1,3 +1,15 @@
+<head>
+    <title>Settings | The Decorista</title>
+    {% include 'navbar/navbar.html' %}
+    <style media="screen">
+        .bodypart {
+            margin-top: 5%;
+        }
+    </style>
+</head>
+
+<div class="bodypart">
+
 {% block content %}
   <h2>Settings</h2>
   <hr>
@@ -15,3 +27,6 @@
   <a class="text_links" href="/accounts/send_activation_email/">Resend activation email</a><br>
   <a href="/accounts/logout">Logout</a>
 {% endblock %}
+
+
+</div>

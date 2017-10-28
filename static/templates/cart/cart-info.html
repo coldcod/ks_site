@@ -1,49 +1,63 @@
-<ul>
-    Cart info:<br>
-    {% if orders %}
-        {% for order in orders %}
-            <li><a class="text_links" href="/store/{{order.product.pid}}/">{{order.product.title}}</a> - Rs. {{order.product.price}}, Quantity - {{order.quantity}}</li>
-        {% endfor %}
-    {% else %}<p>No orders</p>
-    {% endif %}
-</ul>
-<br>
-Total Items - {{count}} <br>
-Total Amount - Rs. {{total}}<br><br>
+<head>
+    <title>Your Cart | The Decorista</title>
+    {% include 'navbar/navbar.html' %}
+    <style media="screen">
+        .bodypart {
+            margin-top: 5%;
+        }
+    </style>
+</head>
 
-{% if authenticated %}
+<div class="bodypart">
 
-    {% if usr.profile.email_confirmed %}
+    <ul>
+        Cart info:<br>
+        {% if orders %}
+            {% for order in orders %}
+                <li><a class="text_links" href="/store/{{order.product.pid}}/">{{order.product.title}}</a> - Rs. {{order.product.price}}, Quantity - {{order.quantity}}</li>
+            {% endfor %}
+        {% else %}<p>No orders</p>
+        {% endif %}
+    </ul>
+    <br>
+    Total Items - {{count}} <br>
+    Total Amount - Rs. {{total}}<br><br>
 
-        {% if address_not_filled or first_name_not_filled or last_name_not_filled %}
+    {% if authenticated %}
 
-            <form action="/cart/addressFilledBuyout/" method="post">
-                {% csrf_token %}
-                Address: <input type="text" name="address" value="{{usr.profile.address}}"><br>
-                {% if usr.first_name == '' or usr.last_name == '' %}
-                    First Name: <input type="text" name="first_name" value="{{usr.first_name}}"><br>
-                    Last Name: <input type="text" name="last_name" value="{{usr.last_name}}"><br>
-                {% endif %}
-                <input type="submit" name="submit" value="Buy Now">
-            </form>
+        {% if usr.profile.email_confirmed %}
 
-        {% else %}
+            {% if address_not_filled or first_name_not_filled or last_name_not_filled %}
 
-            Address - {{usr.profile.address}}<br>
-            First Name - {{usr.first_name}} <br>
-            Last Name - {{usr.last_name}}<br><br>
-            <a href="/cart/addressFilledBuyout/" class="text_links">Buy Now</a>
+                <form action="/cart/addressFilledBuyout/" method="post">
+                    {% csrf_token %}
+                    Address: <input type="text" name="address" value="{{usr.profile.address}}"><br>
+                    {% if usr.first_name == '' or usr.last_name == '' %}
+                        First Name: <input type="text" name="first_name" value="{{usr.first_name}}"><br>
+                        Last Name: <input type="text" name="last_name" value="{{usr.last_name}}"><br>
+                    {% endif %}
+                    <input type="submit" name="submit" value="Buy Now">
+                </form>
+
+            {% else %}
+
+                Address - {{usr.profile.address}}<br>
+                First Name - {{usr.first_name}} <br>
+                Last Name - {{usr.last_name}}<br><br>
+                <a href="/cart/addressFilledBuyout/" class="text_links">Buy Now</a>
+
+            {% endif %}
+
+        {% elif usr.profile.email_confirmed is not True %}
+
+            <span style="color: rgb(131, 32, 32);">Your account has not been activated yet. Please check your inbox to activate before buying, or <a class="text_links" href="/accounts/send_activation_email/">resend activation email</a></span>
 
         {% endif %}
 
-    {% elif usr.profile.email_confirmed is not True %}
+    {% else %}
 
-        <span style="color: rgb(131, 32, 32);">Your account has not been activated yet. Please check your inbox to activate before buying, or <a class="text_links" href="/accounts/send_activation_email/">resend activation email</a></span>
+        <span style="color: rgb(147, 20, 20);">Please <a href="/accounts/login/">Login</a> or <a href="/accounts/signup/">Signup</a> before placing your order.</span>
 
     {% endif %}
 
-{% else %}
-
-    <span style="color: rgb(147, 20, 20);">Please <a href="/accounts/login/">Login</a> or <a href="/accounts/signup/">Signup</a> before placing your order.</span>
-
-{% endif %}
+</div>
