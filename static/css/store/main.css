@@ -30,9 +30,15 @@ ul.products .price-r {
     margin-bottom: 5px;
 }
 
+.add-to-cart {
+    font-size: 85%;
+    text-decoration: underline;
+    color: rgb(0, 35, 80);
+}
+
 .products_list {
     margin-left: 25%;
-    margin-top: 5%;
+    margin-top: 10%;
 }
 
 /*ul.products {
@@ -45,13 +51,13 @@ ul.products .price-r {
 
 #myNavbar {
     background-color: rgb(0, 35, 80);
-    margin-bottom: 19%;
+    margin-bottom: 22%;
 }
 
-.navbar-brand {
+/*.navbar-brand {
     transform: translateX(-50%);
     float: left;
-}
+}*/
 
 .active {
     background-color: rgb(8, 93, 181);
@@ -85,8 +91,7 @@ ul.products .price-r {
 }
 
 .search-box {
-    border: none;
-    border-radius: 3.5px;
+    border: 1px;
 }
 
 .glyphicon-search {
@@ -98,12 +103,12 @@ ul.products .price-r {
     color: white;
 }
 
-.navbar {
+/* .navbar {
     overflow: hidden;
     background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+    position: fixed;
+    top: 0;
+    width: 100%;
     margin-left: 0%;
 }
 
@@ -114,6 +119,10 @@ ul.products .price-r {
     text-align: center;
     padding: 1% 1%;
     text-decoration: none;
+}*/
+
+a {
+    color: rgb(0, 25, 27);
 }
 
 
@@ -136,7 +145,7 @@ ul.products img {
 
 @media screen and (max-width: 958px) {
     .navbarMain {
-        margin-bottom: 21%;
+        margin-bottom: 25%;
     }
     .products_list ul {
         padding: 0;
@@ -157,7 +166,7 @@ ul.products img {
         display: none;
     }
     ul.products li {
-        margin-bottom: 10%;
+        margin-bottom: 7%;
         display: inline-block;
     }
     .title {

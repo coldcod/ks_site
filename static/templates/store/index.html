@@ -4,10 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 3 Fixed Layout Example</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/store/' %}main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 {% include 'navbar/navbar.html' %}
@@ -36,20 +33,22 @@
         <ul class="products">
             {% for product in latest_products %}
                 <li><a href="/store/{{ product.pid }}/"><img src="{% static 'store/'%}{{product.img}}" height=60><br>
-                    <span class="title licnt">{{product.title}}</span><br>
+                    <b><span class="title licnt">{{product.title}}</span><br></b>
                     {% if product.notes is not None and product.notes is not '' %}
                         <span class="notes licnt">{{product.notes}}</span><br>
                     {% endif %}
-                    <span class="price licnt all-pr">₹{{product.price}}</span>&nbsp;
                     {% if product.discount_in_percent is not 0 %}
                         <span class="price_og price-r licnt all-pr"><s>₹{{product.og_price}}</s></span>&nbsp;
+                    {% endif %}
+                    <b><span class="price licnt all-pr">₹{{product.price}}</span></b>&nbsp;
+                    {% if product.discount_in_percent is not 0 %}
                         <span class="discount price-r licnt all-pr">{{product.discount_in_percent}}% off</span>
                     {% endif %}
-                </a><br><br>
+                </a><br><a class="add-to-cart licnt" href="/cart/add-to-cart/{{product.pid}}">Add to cart</a><br><br>
             {% endfor %}
         </ul>
     {% else %}
-        <h1>No Products Available.</h1>
+        <h1>No Products Matched Your Criteria.</h1>
     {% endif %}
 
 

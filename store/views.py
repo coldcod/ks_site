@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.postgres.search import SearchVector
 from .models import Product
 from get_cart_kssite import get_cart
 
@@ -6,8 +7,12 @@ from get_cart_kssite import get_cart
 
 def index(req):
     orders = get_cart.get_cart_info(req)
-    if (req.GET):
+    if (req.GET.get('category') is not None):
         latest_products = Product.objects.filter(category=req.GET.get('category').title())
+    elif req.GET.get('q') is not None:
+        latest_products = Product.objects.annotate(
+            search=SearchVector('title', 'description', 'category', 'notes'),
+        ).filter(search=req.GET.get('q'))
     else:
         latest_products = Product.objects.order_by('-pubdate')
     categories = Product.objects.all().values_list('category', flat=True)
