@@ -22,14 +22,17 @@
         </script>
         <style media="screen">
             #myNavbar {
-                background-color: rgb(1, 15, 40);
-                border-bottom: 4.5px solid rgb(0, 84, 145);
+                background-color: #010f28;
+                border-bottom: 4.5px solid #005491;
+            }
+            .brand-logo {
+                height: 6%;
             }
         </style>
     </head>
     <div class="navbarMain">
         <nav id="myNavbar" class="navbar navbar-expand-md navbar-light fixed-top" role="navigation">
-            <a href="/" class="navbar-brand py-0">The Decorista</a>
+            <a href="/" class="navbar-brand py-0"><img class="brand-logo" src="{% static 'img/dec2-nav.png' %}" alt="The Decorista"></a>
         	<!-- Brand and toggle get grouped for better mobile display -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
