@@ -28,6 +28,22 @@
             .brand-logo {
                 height: 6%;
             }
+            .navbar-toggler {
+                background-color: #fff;
+            }
+            .navbar-toggler-icon {
+                background-color: #fff;
+            }
+            .active {
+                background-color: #005491;
+                border-radius: 3.8px;
+            }
+            @media screen and (max-width: 767px) {
+                .active {
+                    width: 11.8%;
+                }
+            }
+
         </style>
     </head>
     <div class="navbarMain">
@@ -40,7 +56,7 @@
         	<!-- Collect the nav links, forms, and other content for toggling -->
         	<div class="collapse navbar-collapse" id="navbarSupportedContent">
         		<ul class="navbar-nav">
-                    <li class="nav-item dropdown py-0">
+                    &nbsp;<li class="nav-item dropdown py-0">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Store
                         </a>
@@ -52,12 +68,12 @@
                             <a href="/store/" class="dropdown-item" style="color: black;">All</a>
                         </div>
                     </li>
-        			<li class="login-nav py-0"><a class="nav-link" href="/accounts/login/" target="_blank"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
+        			&nbsp;<li class="login-nav py-0"><a class="nav-link" href="/accounts/login/" target="_blank"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
         			<li class="signup-nav py-0"><a class="nav-link" href="/accounts/signup/" target="_blank"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Signup</a></li>
-                    <li class="settings-nav py-0"><a href="/accounts/settings/" class="nav-link" target="_blank"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Settings</a></li>
+                    &nbsp;<li class="settings-nav py-0"><a href="/accounts/settings/" class="nav-link" target="_blank"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Settings</a></li>
     			</ul>
                 <ul class="navbar-nav ml-auto" style="vertical-align: middle;">
-                    <li class="nav-item">
+                    &nbsp;<li class="nav-item">
                         <form class="form-inline my-2 my-lg-0" role="search" method="get" action="/store/">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
@@ -65,7 +81,7 @@
                             </div>
                         </form>
                     </li>
-                    <li class="cart-nav nav-item py-0 my-2 my-lg-0"><a class="nav-link" href="/cart/" target="_blank" id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a></li>
+                    &nbsp;<li class="cart-nav nav-item py-0 my-2 my-lg-0"><a class="nav-link" href="/cart/" target="_blank" id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a></li>
                 </ul>
     		</div>
         </nav>
