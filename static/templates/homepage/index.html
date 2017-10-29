@@ -1,5 +1,6 @@
 {%load static%}
 <head>
+    <title>The Decorista</title>
     <link rel="stylesheet" type="text/css" href="{%static 'css/'%}wired_links.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/homepage/' %}main.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -9,18 +10,18 @@
     <script src="https://use.fontawesome.com/62a134c262.js"></script>
 </head>
 <center>
-    <div class="outer">
+    <div class="outer" style="background-color: #010f27;">
         <div class="middle">
             <div class="inner">
 
-                <h1><span id="kssite"><img src="{% static 'img/dec2.png' %}" alt="THE DECORISTA" class="main-logo"></span></h1>
+                <h1><span id="kssite"><img src="{% static 'img/dec2.jpg' %}" alt="THE DECORISTA" class="main-logo"></span></h1>
                 <br>
                 {% for item in items %}
                     <a class="text_links" style="" href="{{item.link}}">
                         {{item.content}}
                     </a>
                     {% if item.content != 'Store' %}
-                        &nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     {% endif %}
                 {% endfor %}
 

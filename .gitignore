@@ -6,7 +6,6 @@ static/store/*.jpg
 store/static/store/*
 static/store/*.png
 static/store/*.JPG
-ks_site/settings.py
 static/.DS_Store
 static/templates/.DS_Store
 .DS_Store

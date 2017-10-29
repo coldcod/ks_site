@@ -24,7 +24,9 @@ a {
     font-size: 260%;
 }
 
-img {
-    height: 47%;
+.main-logo {
+    height: 50%;
     border-radius: 3.5px;
+    margin-left: 0%;
+    margin-right: 0%;
 }
