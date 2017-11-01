@@ -1,0 +1,37 @@
+{% if prod and prod is not '' %}
+
+    [ORDER] [Quantity = 1 (one)]<br>
+    <hr>
+    Product - <br>
+    <span style="left: 5px;">
+        Title - {{prod.title}}<br>
+        Total Amounted - {{prod.price}}<br>
+        Category - {{prod.category}} <br>
+    </span>
+
+{% elif orders and orders is not '' %}
+
+    [ORDER] [Quantity = {{orders.count}}]<br>
+    <ol>
+
+        {% for order in orders.orders %}
+
+            <li>
+                Product - {{order.product.title}} - Rs. {{order.product.price}}, Quantity - {{order.quantity}}
+            </li>
+
+        {% endfor %}
+
+    </ol>
+    <br>
+    Total Amount - {{orders.total}}<br>
+
+{% endif %}
+<hr>
+Buyer - <br>
+<span style="left: 5px;">
+    Email - {{usr.email}}<br>
+    First Name - {{usr.first_name}}<br>
+    Last Name - {{usr.last_name}}<br>
+    Address - {{usr.profile.address}}
+</span>

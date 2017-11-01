@@ -1,0 +1,22 @@
+{% if no_err %}
+
+    Dear {{usr.first_name}} {{usr.last_name}}, {{usr.email}}, <br>
+    <br>
+    {% if prod and prod is not '' %}
+        Your order for {{prod.title}} has been received and will be processed as soon as possible to be sent to the following address:<br>
+    {% elif orders and orders is not '' %}
+        Your order for the following products has been received and will be processed as soon as possible to be sent to the following address:<br>
+        <ol>
+            {% for order in orders.orders %}
+                <li>{{order.product.title}} - Rs. {{order.product.price}}, Quantity - {{order.quantity}}</li>
+            {% endfor %}
+        </ol>
+    {% endif %}<br>
+    {{usr.profile.address}} <br> <br>
+    For any inquiries, you can contact the Head of Product Management at [kartik's email].<br>
+    For technical assistance or reports, contact the Head of Development and Design at satwindersapra@gmail.com<br>
+    <br>
+    Cheers,
+    The [name of site] Team.
+
+{% endif %}

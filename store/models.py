@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from datetime import datetime
 from django.utils import timezone
 from django.template.defaultfilters import slugify
+from subprocess import call
 
 from .pid import pid
 
@@ -31,6 +32,7 @@ class Product(models.Model):
         self.category = self.category.title()
         self.og_price = self.price
         self.price -= (self.discount_in_percent / 100.0) * self.price
+        call(['python3', 'manage.py', 'collectstatic', '--noinput'])
         super(Product, self).save(*args, **kwargs)
 
 class ProductImages(models.Model):
@@ -38,3 +40,6 @@ class ProductImages(models.Model):
     image = models.ImageField()
     def __str__(self):
         return str(self.image)
+    def save(self, *args, **kwargs):
+        call(['python3', 'manage.py', 'collectstatic', '--noinput'])
+        super(ProductImages, self).save(*args, **kwargs)

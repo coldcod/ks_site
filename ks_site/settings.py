@@ -36,9 +36,8 @@ SECRET_KEY = 'q8w7g5lbyhn-_xae!xicjok-3g%%z2_1=(h3z2$sr0-xq)1sx8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.8.100', '192.168.8.102', '192.168.8.103', '192.168.8.104']
+ALLOWED_HOSTS = ['139.59.14.19', 'localhost', '127.0.0.1', '192.168.8.100', '192.168.8.102', '192.168.8.103', '192.168.8.104']
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'satwindersapra@gmail.com'
@@ -144,5 +143,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'prod_static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
