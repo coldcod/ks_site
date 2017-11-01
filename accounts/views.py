@@ -101,16 +101,18 @@ def signup(req):
                 instance = form.save(commit=False)
                 raw_psswd = form.cleaned_data.get('password2')
                 email = form.cleaned_data.get('email')
+                pno = form.cleaned_data.get('phone')
                 instance.username = email
                 instance.save()
                 instance.profile.email_confirmed = False
+                instance.profile.phone_number = pno
                 login(req, instance)
                 instance.profile.save()
                 instance.save()
 
                 return redirect('send_activation_email')
             except Exception as e:
-                return render(req, 'accounts/signup.html', {'form': form, 'tm': "Username already exists."})
+                return render(req, 'accounts/signup.html', {'form': form, 'tm': e})
     else:
         form = SignUpForm()
     context = {
