@@ -19,44 +19,54 @@
         {% else %}<p>No orders</p>
         {% endif %}
     </ul>
-    <br>
-    Total Items - {{count}} <br>
-    Total Amount - Rs. {{total}}<br><br>
+    {% if orders %}
+        <br>
+        Total Items - {{count}} <br>
+        Total Amount - Rs. {{total}}<br><br>
 
-    {% if authenticated %}
+        {% if authenticated %}
 
-        {% if usr.profile.email_confirmed %}
+            {% if usr.profile.email_confirmed %}
 
-            {% if address_not_filled or first_name_not_filled or last_name_not_filled %}
+                {% if address_not_filled or first_name_not_filled or last_name_not_filled %}
 
-                <form action="/cart/addressFilledBuyout/" method="post">
-                    {% csrf_token %}
-                    Address: <input type="text" name="address" value="{{usr.profile.address}}"><br>
-                    {% if usr.first_name == '' or usr.last_name == '' %}
-                        First Name: <input type="text" name="first_name" value="{{usr.first_name}}"><br>
-                        Last Name: <input type="text" name="last_name" value="{{usr.last_name}}"><br>
-                    {% endif %}
-                    <input type="submit" name="submit" value="Buy Now">
-                </form>
+                    <form action="/cart/addressFilledBuyout/" method="post">
+                        {% csrf_token %}
+                        Address: <input type="text" name="address" value="{{usr.profile.address}}"><br>
+                        {% if usr.first_name == '' or usr.last_name == '' %}
+                            First Name: <input type="text" name="first_name" value="{{usr.first_name}}"><br>
+                            Last Name: <input type="text" name="last_name" value="{{usr.last_name}}"><br>
+                        {% endif %}
+                        <input type="submit" name="submit" value="Buy Now">
+                    </form>
 
-            {% else %}
+                {% else %}
 
-                Address - {{usr.profile.address}}<br>
-                First Name - {{usr.first_name}} <br>
-                Last Name - {{usr.last_name}}<br><br>
-                <a href="/cart/addressFilledBuyout/" class="text_links">Buy Now</a>
+                    Address - {{usr.profile.address}}<br>
+                    First Name - {{usr.first_name}} <br>
+                    Last Name - {{usr.last_name}}<br><br>
+                    <a href="/cart/addressFilledBuyout/" class="text_links">Buy Now</a>
+
+                {% endif %}
+
+            {% elif usr.profile.email_confirmed is not True %}
+
+                <span style="color: rgb(131, 32, 32);">Your account has not been activated yet. Please check your inbox to activate before buying, or <a class="text_links" href="/accounts/send_activation_email/">resend activation email</a></span>
 
             {% endif %}
 
-        {% elif usr.profile.email_confirmed is not True %}
+        {% else %}
 
-            <span style="color: rgb(131, 32, 32);">Your account has not been activated yet. Please check your inbox to activate before buying, or <a class="text_links" href="/accounts/send_activation_email/">resend activation email</a></span>
+            <form action="/cart/confirmed/" method="post">
+                {% csrf_token %}
+                Email: <input type="email" name="email"><br>
+                Address: <input type="text" name="address"><br>
+                First Name: <input type="text" name="first_name"><br>
+                Last Name: <input type="text" name="last_name"><br>
+                <input type="submit" name="submit" value="Buy Now">
+            </form>
 
         {% endif %}
-
-    {% else %}
-
-        <span style="color: rgb(147, 20, 20);">Please <a href="/accounts/login/">Login</a> or <a href="/accounts/signup/">Signup</a> before placing your order.</span>
 
     {% endif %}
 

@@ -70,6 +70,73 @@ def confirmed(req):
     else:
         pid = None'''
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+
+
+    # Taking orders from guests
+    if req.method == 'POST':
+        address = req.POST.get('address')
+        first_name = req.POST.get('first_name')
+        last_name = req.POST.get('last_name')
+        email = req.POST.get('email')
+
+        # To MANAGEMENT
+        subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
+        prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
+        orders = None if pid is not '' and pid is not None else get_cart_info(req)
+        context = {
+            'usr': req.user,
+            'address': address,
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+            'prod': prod,
+            'orders': orders,
+            'logged_in': False
+        }
+        html_content = render_to_string('cart/order.html', context)
+        text_content = strip_tags(html_content)
+        _from = "satwindersapra@gmail.com"
+        to = "satwindersapra@gmail.com"
+        msg = EmailMultiAlternatives(subject, text_content, _from, ["satwindersapra@gmail.com"])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        # To CUSTOMER
+        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
+        context = {
+            'no_err': True,
+            'usr': req.user,
+            'address': address,
+            'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+            'prod': prod,
+            'orders': orders,
+            'logged_in': False
+        }
+        html_content = render_to_string('cart/to_cust.html', context)
+        text_content = strip_tags(html_content)
+        _from = "satwindersapra@gmail.com"
+        to = req.user.email
+        msg = EmailMultiAlternatives(subject, text_content, _from, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        if prod is '' or prod is None:
+            cart = get_cart(req)
+            for order in orders['orders']:
+                cart._remove(order.product.pid)
+
+        context = {
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': 0,
+            'count': 0,
+            'categories': categories,
+        }
+        return render(req, 'cart/placed.html', context)
+
+    # Taking orders from logged in and valid users
     if boolean and req.user.email and req.user.profile.address is not '' and req.user.first_name is not '' and req.user.last_name is not '':
         # To MANAGEMENT
         subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
@@ -79,6 +146,7 @@ def confirmed(req):
             'usr': req.user,
             'prod': prod,
             'orders': orders,
+            'logged_in': True
         }
         html_content = render_to_string('cart/order.html', context)
         text_content = strip_tags(html_content)
@@ -94,7 +162,8 @@ def confirmed(req):
             'no_err': True,
             'usr': req.user,
             'prod': prod,
-            'orders': orders
+            'orders': orders,
+            'logged_in': True
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
@@ -129,7 +198,19 @@ def buy(req):
     pid = req.GET.get('p', '')
     boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean is not True:
-        return redirect('/accounts/login?p=' + pid)
+        product = Product.objects.get(pid=pid)
+        usr = req.user
+        context = {
+            'usr': usr,
+            'product': product,
+            'logged_in': False,
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': orders['total'] or 0,
+            'count': orders['count'] or 0,
+            'categories': categories,
+        }
+        return render(req, 'cart/buy.html', context)
     elif boolean:
         address_not_filled = req.user.profile.address == ''
         first_name_not_filled = req.user.first_name == ''
@@ -139,6 +220,7 @@ def buy(req):
         context = {
             'usr': usr,
             'product': product,
+            'logged_in': True,
             'address_not_filled': address_not_filled,
             'first_name_not_filled': first_name_not_filled,
             'last_name_not_filled': last_name_not_filled,

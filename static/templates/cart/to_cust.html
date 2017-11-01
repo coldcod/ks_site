@@ -1,6 +1,10 @@
 {% if no_err %}
 
-    Dear {{usr.first_name}} {{usr.last_name}}, {{usr.email}}, <br>
+    {% if logged_in %}
+        Dear {{usr.first_name}} {{usr.last_name}}, {{usr.email}}, <br>
+    {% else %}
+        Dear {{first_name}} {{last_name}}, {{email}}, <br>
+    {% endif %}
     <br>
     {% if prod and prod is not '' %}
         Your order for {{prod.title}} has been received and will be processed as soon as possible to be sent to the following address:<br>
@@ -12,7 +16,11 @@
             {% endfor %}
         </ol>
     {% endif %}<br>
-    {{usr.profile.address}} <br> <br>
+    {% if logged_in %}
+        {{usr.profile.address}} <br> <br>
+    {% else %}
+        {{address}} <br> <br>
+    {% else %}
     For any inquiries, you can contact the Head of Product Management at [kartik's email].<br>
     For technical assistance or reports, contact the Head of Development and Design at satwindersapra@gmail.com<br>
     <br>
