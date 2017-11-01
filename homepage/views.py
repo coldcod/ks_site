@@ -11,6 +11,6 @@ def index(req):
     items = [
         Item('/accounts/login/', 'Login'),
         Item('/accounts/signup/', 'Signup'),
-        Item('/store/', 'Store'),
+        Item('/store/', 'Guest'),
     ]
     return render(req, 'homepage/index.html', {'items': items})
