@@ -13,6 +13,17 @@ def index(req):
         latest_products = Product.objects.annotate(
             search=SearchVector('title', 'description', 'category', 'notes'),
         ).filter(search=req.GET.get('q'))
+    elif req.GET.get('sort') is not None:
+        if req.GET.get('sort') == 'price-a':
+            latest_products = Product.objects.order_by('price')
+        elif req.GET.get('sort') == 'price-d':
+            latest_products = Product.objects.order_by('-price')
+        elif req.GET.get('sort') == 'name-a':
+            latest_products = Product.objects.order_by('title')
+        elif req.GET.get('sort') == 'name-d':
+            latest_products = Product.objects.order_by('-title')
+        else:
+            latest_products = Product.objects.order_by('price')
     else:
         latest_products = Product.objects.order_by('-pubdate')
     categories = list(set(Product.objects.all().values_list('category', flat=True)))
