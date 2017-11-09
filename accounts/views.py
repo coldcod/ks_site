@@ -86,8 +86,9 @@ def send_activation_email(req):
         'uid': urlsafe_base64_encode(force_bytes(instance.pk)),
         'token': account_activation_token.make_token(instance),
     })
-    msg = EmailMultiAlternatives("Activate KS_Mart account", message, "satwindersapra@gmail.com", [instance.email])
-    msg.send()
+    send_mail("Activate Your Account | The Decorista", message, "satwindersapra@gmail.com", [instance.email])
+    #msg = EmailMultiAlternatives("Activate The Decorista Account", message, "satwindersapra@gmail.com", [instance.email])
+    #msg.send()
     return redirect('account_activation_sent')
 
 def signup(req):

@@ -95,11 +95,8 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/order.html', context)
         text_content = strip_tags(html_content)
-        _from = "satwindersapra@gmail.com"
-        to = "satwindersapra@gmail.com"
-        msg = EmailMultiAlternatives(subject, text_content, _from, ["satwindersapra@gmail.com"])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        _from = " satwindersapra@gmail.com"
+        send_mail(subject, text_content, _from, [" satwindersapra@gmail.com"])
 
         # To CUSTOMER
         subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
@@ -116,11 +113,8 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = "satwindersapra@gmail.com"
-        to = req.user.email
-        msg = EmailMultiAlternatives(subject, text_content, _from, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        _from = " satwindersapra@gmail.com"
+        send_mail(subject, text_content, _from, [email])
 
         if prod is '' or prod is None:
             cart = get_cart(req)
@@ -150,11 +144,8 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/order.html', context)
         text_content = strip_tags(html_content)
-        _from = "satwindersapra@gmail.com"
-        to = "satwindersapra@gmail.com"
-        msg = EmailMultiAlternatives(subject, text_content, _from, ["satwindersapra@gmail.com"])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        _from = " satwindersapra@gmail.com"
+        send_mail(subject, text_content, _from, [' satwindersapra@gmail.com'])
 
         # To CUSTOMER
         subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
@@ -167,11 +158,9 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = "satwindersapra@gmail.com"
+        _from = " satwindersapra@gmail.com"
         to = req.user.email
-        msg = EmailMultiAlternatives(subject, text_content, _from, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        send_mail(subject, text_content, _from, [to])
 
         if prod is '' or prod is None:
             cart = get_cart(req)

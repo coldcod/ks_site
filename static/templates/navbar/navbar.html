@@ -19,6 +19,10 @@
                     $('.navbar-nav > li > a[href="'+pathname+'"]').parent().addClass('active');
                 };
             });
+            function search_submit() {
+                var category = $('.search-input-form')[0].value
+                window.open("https://thedecorista.in/store/?category="+category,"_self")
+            }
         </script>
         <style media="screen">
             #myNavbar {
@@ -36,7 +40,7 @@
                 border: none;
                 color: white;
             }
-            .navbar-default .navbar-toggle .icon-bar {
+            .navbar-default .navbar-toggle {
                 background-color: white;
             }
             .active {
@@ -58,6 +62,9 @@
                 }
                 .brand-logo {
                     height: 8%;
+                }
+                .search-input-form {
+                    display: none;
                 }
             }
             .navbar-text {
@@ -176,8 +183,8 @@
                 </ul>-->
     		</div>
             <div class="navbar-header ml-auto pull-right">
-                <ul class="nav navbar-nav pull-left">
-                  <li> <i class="fa fa-search" aria-hidden="true" style="background-color: #0a0a0d; border: none; color: white;"></i>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; <a href="/cart/"   id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a> &nbsp;&nbsp;&nbsp;</li>
+                <ul class="nav navbar-nav">
+                  <li> <input onsubmit="search_submit()" class="search-input-form" type="text" style="width:50% !important; background-color:#003459; color: #fff;" placeholder="Click on search icon" name="q" aria-describedby="basic-addon2">&nbsp;&nbsp;<i onclick="search_submit()" class="fa fa-search basic-addon2 search-input-icon" aria-hidden="true" style="background-color: #0a0a0d; border: none; color: white;"></i> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; <a href="/cart/"   id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a> &nbsp;&nbsp;&nbsp;</li>
 
                 </ul>
 
