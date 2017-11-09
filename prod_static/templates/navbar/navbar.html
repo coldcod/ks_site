@@ -22,21 +22,47 @@
         </script>
         <style media="screen">
             #myNavbar {
-                background-color: #010f28;
-                border-bottom: 4.5px solid #005491;
+                background-color: #0a0a0d;
+                border-bottom: 0.1px solid rgb(0, 0, 0);
+            }
+            #myNavbar a {
+                color: white !important;
             }
             .brand-logo {
-                height: 6%;
+                height: 7.5%;
             }
             .navbar-toggler {
-                background-color: #fff;
+                background-color: #000;
+                color: white;
+                border: none;
             }
             .navbar-toggler-icon {
-                background-color: #fff;
+                background-color: #000;
+                border: none;
+                color: white;
+            }
+            button.navbar-toggle{
+                background:none;
+                border:none;
+                color:#fff;
+
+            }
+            button.navbar-toggle span{
+               background:#000;/*change accordingly*/
             }
             .active {
-                background-color: #005491;
-                border-radius: 3.8px;
+                /*background-color: #005491;
+                border-radius: 3.8px;*/
+                color: rgb(164, 0, 5);
+
+                transition: background .15s cubic-bezier(.33,.66,.66,1);
+                border-bottom: 1.6px solid #00465d;
+                box-shadow: inset 0 -2.0px 0 #001c25;
+                text-decoration: none;
+
+
+
+                text-decoration: bold !important;
             }
             @media screen and (max-width: 767px) {
                 .active {
@@ -47,6 +73,78 @@
                 }
             }
 
+            /*
+
+
+            footer{
+            	position: absolute;
+                right: 0;
+                left: 0;
+            	bottom: 0;
+                margin-bottom: 0;
+            }
+
+            .fixed-bottom {
+                position: absolute !important;
+                bottom: 0;
+            }
+
+            @media (max-height:800px){
+            	footer { position: static; }
+            }
+            .footer-basic-centered{
+            	background-color: #000d1b;
+            	box-sizing: border-box;
+            	width: 100%;
+            	text-align: center;
+            	padding: 1rem;
+            	margin-top: 80px;
+            }
+
+            .footer-company-motto{
+            	color:  #fff;
+            	font-size: 16px;
+                float: left;
+            	margin: 0;
+                padding: 2px 0 3.3px;
+                padding-left: 20px;
+            }
+
+            .footer-links{
+            	list-style: none;
+            	font-weight: bold;
+            	color:  #d0d0d0;
+            	padding: 2px 0 3.3px;
+                text-align: right;
+            	margin: 0;
+                padding-right: 30px;
+            }
+
+
+            @media (max-width: 800px) {
+
+            	.footer-basic-centered{
+            		padding: 35px;
+            	}
+
+            	.footer-basic-centered .footer-company-motto{
+            		font-size: 18px;
+            	}
+
+            	.footer-basic-centered .footer-company-name{
+            		font-size: 12px;
+            	}
+
+            	.footer-basic-centered .footer-links{
+            		font-size: 14px;
+            		padding: 25px 0 20px;
+                    text-align: center;
+            	}
+
+            	.footer-basic-centered .footer-links a{
+            		line-height: 1.8;
+            	}
+            }*/
         </style>
     </head>
     <div class="navbarMain">
@@ -71,23 +169,35 @@
                             <a href="/store/" class="dropdown-item" style="color: black;">All</a>
                         </div>
                     </li>
-        			&nbsp;<li class="login-nav py-0"><a class="nav-link" href="/accounts/login/" target="_blank"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
-        			<li class="signup-nav py-0"><a class="nav-link" href="/accounts/signup/" target="_blank"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Signup</a></li>
-                                <li class="logout-nav py-0"><a class="nav-link" href="/accounts/logout/" target="_blank"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
-                                &nbsp;<li class="settings-nav py-0"><a href="/accounts/settings/" class="nav-link" target="_blank"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Settings</a></li>
+        			&nbsp;<li class="login-nav py-0"><a class="nav-link" href="/accounts/login/"  ><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login</a></li>
+        			<li class="signup-nav py-0"><a class="nav-link" href="/accounts/signup/"  ><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Signup</a></li>
+                                <li class="logout-nav py-0"><a class="nav-link" href="/accounts/logout/"  ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a></li>
+                                &nbsp;<li class="settings-nav py-0"><a href="/accounts/settings/" class="nav-link"  ><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Settings</a></li>
     			</ul>
                 <ul class="navbar-nav ml-auto" style="vertical-align: middle;">
                     &nbsp;<li class="nav-item">
                         <form class="form-inline my-2 my-lg-0" role="search" method="get" action="/store/">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" placeholder="Search" name="q">
+                            <div class="input-group my-2 my-lg-0">
+                                <span class="my-2 my-lg-0"><i class="form-control fa fa-search my-2 my-lg-0" aria-hidden="true" style="background-color: #fff; border: none; color: black;"></i></span>
+                                <!--<input type="text" class="form-control" placeholder="Search" name="q">-->
                             </div>
                         </form>
                     </li>
-                    &nbsp;<li class="cart-nav nav-item py-0 my-2 my-lg-0"><a class="nav-link" href="/cart/" target="_blank" id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a></li>
+                    &nbsp;<li class="cart-nav nav-item py-0 my-2 my-lg-0"><a class="nav-link" href="/cart/"   id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a></li>
                 </ul>
     		</div>
         </nav>
     </div>
+    <!--
+    <nav class="fixed-bottom" role="navigation">
+        <footer class="footer-basic-centered">
+
+        			<p class="footer-company-motto">Copyright &copy; 2017 The Decorista - All Rights Reserved.</p>
+
+        			<p class="footer-links">
+                        Engineered and Managed by S + K
+        			</p>
+
+        </footer>
+    </nav>-->
 {% endblock %}

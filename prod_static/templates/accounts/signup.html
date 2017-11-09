@@ -9,7 +9,140 @@
     .tags {
         font-size: 50%;
     }
+    /*body {
+        min-height: 100%;
+    }
+    .footer {
+        background-color: rgb(0, 16, 33);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        display: block;
+        font-size: 16px;
+        position: relative;
+        flex-direction: row;
+    }
+    .team {
+        float: right;
+        vertical-align: middle;
+        color: rgb(132, 132, 132);
+    }
+    .copywright {
+        float: left;
+        vertical-align: middle;
+        color: rgb(241, 241, 241);
+    }
+
+    @media screen and (max-width: 958px) {
+        .footer {
+            background-color: rgb(0, 16, 33);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            display: block;
+            font-size: 16px;
+            position: fixed;
+            flex-direction: row;
+            text-align: center;
+        }
+        .team {
+            text-align: center;
+            color: rgb(132, 132, 132);
+        }
+        .copywright {
+            text-align: center;
+            color: rgb(241, 241, 241);
+        }
+    }
+    .outer {
+        display: table;
+        position: absolute;
+
+    }
+
+    .middle {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .inner {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }*/
+    footer{
+    	position: fixed;
+    	bottom: 0;
+    }
+
+    @media (max-height:800px){
+    	footer { position: static; }
+    }
+    .footer-basic-centered{
+    	background-color: #000d1b;
+    	box-sizing: border-box;
+    	width: 100%;
+    	text-align: center;
+    	padding: 17px;
+    	margin-top: 80px;
+    }
+
+    .footer-basic-centered .footer-company-motto{
+    	color:  #fff;
+    	font-size: 16px;
+        float: left;
+    	margin: 0;
+        padding: 2px 0 3.3px;
+        padding-left: 20px;
+    }
+
+    .footer-basic-centered .footer-links{
+    	list-style: none;
+    	font-weight: bold;
+    	color:  #d0d0d0;
+    	padding: 2px 0 3.3px;
+        text-align: right;
+    	margin: 0;
+        padding-right: 30px;
+    }
+
+    .footer-basic-centered .footer-links a{
+    	display:inline-block;
+    	text-decoration: none;
+    	color: inherit;
+    }
+
+    /* If you don't want the footer to be responsive, remove these media queries */
+
+    @media screen and (max-width: 958px) {
+
+    	.footer-basic-centered{
+    		padding: 35px;
+    	}
+
+    	.footer-basic-centered .footer-company-motto{
+    		font-size: 18px;
+    	}
+
+    	.footer-basic-centered .footer-company-name{
+    		font-size: 12px;
+    	}
+
+    	.footer-basic-centered .footer-links{
+    		font-size: 14px;
+    		padding: 25px 0 20px;
+            text-align: center;
+    	}
+
+    	.footer-basic-centered .footer-links a{
+    		line-height: 1.8;
+    	}
+    }
 </style>
+
+<body>
 
 <head>
     {% include 'navbar/navbar.html' %}
@@ -59,3 +192,15 @@
 {% endblock %}
 </center>
 </div>
+<br>
+<br>
+<footer class="footer-basic-centered">
+
+			<p class="footer-company-motto">Copyright &copy; 2017 The Decorista - All Rights Reserved.</p>
+
+			<p class="footer-links">
+                Engineered and Managed by S + K
+			</p>
+
+</footer>
+</body>

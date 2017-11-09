@@ -167,7 +167,25 @@ ul.products img {
     vertical-align: middle;
 }
 
+.category-dd {
+    display: none;
+}
+
 @media screen and (max-width: 958px) {
+    .category-dd {
+        display: block;
+
+    }
+    .sort {
+        align-items: center;
+        align-self: center;
+        align-content: center;
+        text-align: center;
+        margin-left: 25%;
+    }
+    .category-ul {
+        display: none;
+    }
     .navbarMain {
         margin-bottom: 25%;
     }
@@ -190,13 +208,22 @@ ul.products img {
         float: none;
         margin-top: 0.9%;
         border-style: solid;
-        border-color: rgb(175, 9, 9);
+        border-color: none;
         border-right: 0px;
+        list-style: none;
         border-bottom: 0px;
         border-top: 0px;
-        border-left-width: 7px;
+        border-left: 0px;
         align-items: center;
+        text-align: center;
         position: relative;
+    }
+    .category-ul {
+        content: "[x]"
+    }
+    ul {
+        list-style-type: none;
+        text-align: center;
     }
     ul.products li {
         margin-bottom: 7%;

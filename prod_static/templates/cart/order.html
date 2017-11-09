@@ -29,9 +29,18 @@
 {% endif %}
 <hr>
 Buyer - <br>
-<span style="left: 5px;">
-    Email - {{usr.email}}<br>
-    First Name - {{usr.first_name}}<br>
-    Last Name - {{usr.last_name}}<br>
-    Address - {{usr.profile.address}}
-</span>
+{% if logged_in %}
+    <span style="left: 5px;">
+        Email - {{usr.email}}<br>
+        First Name - {{usr.first_name}}<br>
+        Last Name - {{usr.last_name}}<br>
+        Address - {{usr.profile.address}}
+    </span>
+{% elif logged_in is not True %}
+    <span style="left: 5px;">
+        Email - {{email}}<br>
+        First Name - {{first_name}}<br>
+        Last Name - {{last_name}}<br>
+        Address - {{profile.address}}
+    </span>
+{% endif %}
