@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:900');
+
 ul.products li {
     display: inline-block;
     vertical-align: top;
@@ -240,7 +242,7 @@ ul.products img {
     }
 }
 
-/* navbar stuff */
+/* navbar stuff about general menu items being displayed fullscreen on mobile */
 
 .overlay {
     height: 100%;
@@ -268,6 +270,7 @@ ul.products img {
     text-decoration: none;
     font-size: 36px;
     color: #818181;
+    font-family: 'Playfair Display', serif;
     display: block;
     transition: 0.3s;
 }
@@ -286,6 +289,71 @@ ul.products img {
 @media screen and (max-height: 450px) {
   .overlay a {font-size: 20px}
   .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
+/* search-box being fullscreen on mobile (nvbr stuff cont.) */
+
+.overlay2 {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay2-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay2 a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay2 a:hover, .overlay2 a:focus {
+    color: #f1f1f1;
+}
+
+.overlay2 .closebtn2 {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.search-box-mobile {
+    width: 100%;
+    text-align: center;
+    font-size: 280%;
+    color: #fff;
+    background-color: #191919;
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2.5px dashed #fff;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay2 a {font-size: 20px}
+  .overlay2 .closebtn2 {
     font-size: 40px;
     top: 15px;
     right: 35px;
