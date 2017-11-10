@@ -40,8 +40,8 @@ ALLOWED_HOSTS = ['139.59.14.19', 'localhost', '127.0.0.1', '192.168.8.100', '192
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'satwindersapra@gmail.com'
-EMAIL_HOST_PASSWORD = 'Applegotit'
+EMAIL_HOST_USER = 'TheDecorista.in@gmail.com'
+EMAIL_HOST_PASSWORD = 'pankaj1490'
 EMAIL_PORT = 587
 
 # Application definition

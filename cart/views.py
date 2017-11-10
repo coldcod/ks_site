@@ -95,8 +95,8 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/order.html', context)
         text_content = strip_tags(html_content)
-        _from = " satwindersapra@gmail.com"
-        send_mail(subject, text_content, _from, [" satwindersapra@gmail.com"])
+        _from = " TheDecorista.in@gmail.com"
+        send_mail(subject, text_content, _from, ["satwindersapra@gmail.com"])
 
         # To CUSTOMER
         subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
@@ -113,7 +113,7 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = " satwindersapra@gmail.com"
+        _from = " TheDecorista.in@gmail.com"
         send_mail(subject, text_content, _from, [email])
 
         if prod is '' or prod is None:
@@ -144,7 +144,7 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/order.html', context)
         text_content = strip_tags(html_content)
-        _from = " satwindersapra@gmail.com"
+        _from = " TheDecorista.in@gmail.com"
         send_mail(subject, text_content, _from, [' satwindersapra@gmail.com'])
 
         # To CUSTOMER
@@ -158,7 +158,7 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = " satwindersapra@gmail.com"
+        _from = " TheDecorista.in@gmail.com"
         to = req.user.email
         send_mail(subject, text_content, _from, [to])
 
