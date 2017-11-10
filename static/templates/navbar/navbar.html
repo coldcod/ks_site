@@ -41,7 +41,6 @@
         <style media="screen">
             #myNavbar {
                 background-color: #0a0a0d;
-                border-bottom: 0.1px solid rgb(0, 0, 0);
             }
             .brand-logo {
                 height: 7.5%;
@@ -65,14 +64,15 @@
                 border-radius: 3.8px;*/
                 color: rgb(164, 0, 5);
                 transition: background .15s cubic-bezier(.33,.66,.66,1);
-                border-bottom: 2px solid #00afc1;
-                box-shadow: inset 0 -3.0px 0 #00d690;
+                border-bottom: 4px solid #00d690;
+                box-shadow: inset 0 -2.5px 0 #08909e;
+                bottom: 0 !important;
                 background-color: #0a0a0d !important;
                 height: 100% !important;
                 text-decoration: bold !important;
             }
             .active a {
-
+                color: #fff !important;
             }
             @media screen and (max-width: 800px) {
                 .active {
@@ -180,7 +180,7 @@
 
         	<!-- Collect the nav links, forms, and other content for toggling -->
         	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-        		<ul class="navbar-nav">
+        		<ul class="navbar-nav collapsible-ul">
                     &nbsp;<li class="nav-item dropdown py-0">
                         <a class="nav-link dropdown-toggle playfair-font" href="/store/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Store
