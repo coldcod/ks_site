@@ -36,12 +36,12 @@ SECRET_KEY = 'q8w7g5lbyhn-_xae!xicjok-3g%%z2_1=(h3z2$sr0-xq)1sx8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.59.14.19', 'localhost', '127.0.0.1', '192.168.8.100', '192.168.8.102', '192.168.8.103', '192.168.8.104']
+ALLOWED_HOSTS = ['www.thedecorista.in', 'thedecorista.in', '139.59.14.19', 'localhost', '127.0.0.1', '192.168.8.100', '192.168.8.102', '192.168.8.103', '192.168.8.104']
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'satwindersapra@gmail.com'
-EMAIL_HOST_PASSWORD = 'Applegotit'
+EMAIL_HOST_USER = 'TheDecorista.in@gmail.com'
+EMAIL_HOST_PASSWORD = 'pankaj1490'
 EMAIL_PORT = 587
 
 # Application definition
