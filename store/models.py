@@ -4,6 +4,7 @@ from datetime import datetime
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from subprocess import call
+from django.contrib.auth.models import User
 
 from .pid import pid
 
@@ -22,6 +23,7 @@ class Product(models.Model):
     discount_in_percent = models.IntegerField(default=0)
     notes = models.CharField(max_length=60, blank=True, null=True, default=None)
     pid = models.SlugField(default=slugify(" "), null=True, blank=True, unique=True)
+    author = models.ForeignKey(User, null=True, blank=True)
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):

@@ -12,10 +12,13 @@
 <div class="leftcol">
 
     <ul class="leftcol-ul">
+
         Filter:
-        <ul>
+        <span class="ln-filter"><hr></span>
+        <ul class="category-ul">
             <li>Categories:
                 <ul>
+                    <br>
                     {% for category in categories %}
                         <li><a href="/store?category={{category}}">{{category}}</a></li>
                     {% endfor %}
@@ -23,16 +26,27 @@
                 </ul>
             </li>
         </ul><br>
+        <div class="dropdown category-dd">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Choose Category<span class="caret"></span></button></button>
+            <ul class="dropdown-menu">
+                <li><a href="/store/">All</a></li>
+                {% for category in categories %}
+                    <li><a href="/store/?category={{category}}">{{category}}</a></li>
+                {% endfor %}
+            </ul>
+
+        </div><br>
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort by
             <span class="caret"></span></button>
-                <ul class="dropdown-menu">
+            <ul class="dropdown-menu">
                 <li><a href="/store/?sort=price-a">Price (low to high)</a></li>
                 <li><a href="/store/?sort=price-d">Price (high to low)</a></li>
                 <li><a href="/store/?sort=name-a">Name (A-Z)</a></li>
                 <li><a href="/store/?sort=name-d">Name (Z-A)</a></li>
-                </ul>
+            </ul>
         </div>
+
     </ul>
 
 </div>

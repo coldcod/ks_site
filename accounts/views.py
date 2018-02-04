@@ -12,6 +12,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from get_cart_kssite import get_cart
+from django.contrib.auth.models import Permission
 
 from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
@@ -105,6 +106,31 @@ def signup(req):
                 pno = form.cleaned_data.get('phone')
                 instance.username = email
                 instance.save()
+
+                # --- Adding permissions for normally signing up users to access admin page and list, edit their products ---
+
+                instance.is_staff = True
+
+                permission = Permission.objects.get(name='Can add product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can change product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can delete product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can add product images')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can change product images')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can delete product images')
+                instance.user_permissions.add(permission)
+
+                # --- end of permissions ---
+
                 instance.profile.email_confirmed = False
                 instance.profile.phone_number = pno
                 login(req, instance)
