@@ -82,21 +82,43 @@ def confirmed(req):
         # To MANAGEMENT
         subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
         prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
+        author_email = prod.author.email if prod else ''
         orders = None if pid is not '' and pid is not None else get_cart_info(req)
-        context = {
-            'usr': req.user,
-            'address': address,
-            'first_name': first_name,
-            'last_name': last_name,
-            'email': email,
-            'prod': prod,
-            'orders': orders,
-            'logged_in': False
-        }
-        html_content = render_to_string('cart/order.html', context)
-        text_content = strip_tags(html_content)
-        _from = " TheDecorista.in@gmail.com"
-        send_mail(subject, text_content, _from, ["satwindersapra@gmail.com"])
+
+        # If order has only one product
+        if prod is not None and prod is not '':
+            context = {
+                'usr': req.user,
+                'address': address,
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+                'prod': prod,
+                'orders': '',
+                'logged_in': False
+            }
+            html_content = render_to_string('cart/order.html', context)
+            text_content = strip_tags(html_content)
+            _from = "TheDecorista.in@gmail.com"
+            send_mail(subject, text_content, _from, [author_email])
+
+        # If order has more than 1 product
+        elif orders and orders is not '':
+            for order in orders['orders']:
+                context = {
+                    'usr': req.user,
+                    'address': address,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'email': email,
+                    'prod': order.product,
+                    'orders': '',
+                    'logged_in': False
+                }
+                html_content = render_to_string('cart/order.html', context)
+                text_content = strip_tags(html_content)
+                _from = "TheDecorista.in@gmail.com"
+                send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER
         subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
@@ -113,7 +135,7 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = " TheDecorista.in@gmail.com"
+        _from = "TheDecorista.in@gmail.com"
         send_mail(subject, text_content, _from, [email])
 
         if prod is '' or prod is None:
@@ -136,16 +158,33 @@ def confirmed(req):
         subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
         prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
         orders = None if pid is not '' and pid is not None else get_cart_info(req)
-        context = {
-            'usr': req.user,
-            'prod': prod,
-            'orders': orders,
-            'logged_in': True
-        }
-        html_content = render_to_string('cart/order.html', context)
-        text_content = strip_tags(html_content)
-        _from = " TheDecorista.in@gmail.com"
-        send_mail(subject, text_content, _from, [' satwindersapra@gmail.com'])
+
+        # If order has 1 Product
+        if prod is not None and prod is not '':
+            context = {
+                'usr': req.user,
+                'prod': prod,
+                'orders': '',
+                'logged_in': True
+            }
+            html_content = render_to_string('cart/order.html', context)
+            text_content = strip_tags(html_content)
+            _from = "TheDecorista.in@gmail.com"
+            send_mail(subject, text_content, _from, [prod.author.email])
+
+        # If order has >1 prods
+        if orders is not None and orders is not '':
+            for order in orders['orders']:
+                context = {
+                    'usr': req.user,
+                    'prod': order.product,
+                    'orders': '',
+                    'logged_in': True
+                }
+                html_content = render_to_string('cart/order.html', context)
+                text_content = strip_tags(html_content)
+                _from = "TheDecorista.in@gmail.com"
+                send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER
         subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
@@ -158,7 +197,7 @@ def confirmed(req):
         }
         html_content = render_to_string('cart/to_cust.html', context)
         text_content = strip_tags(html_content)
-        _from = " TheDecorista.in@gmail.com"
+        _from = "TheDecorista.in@gmail.com"
         to = req.user.email
         send_mail(subject, text_content, _from, [to])
 
