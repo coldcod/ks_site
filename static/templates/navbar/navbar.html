@@ -190,10 +190,22 @@
                             <a href="/store/" class="dropdown-item playfair-font" style="color: black;">All</a>
                         </div>
                     </li>
-        			&nbsp;<li class="login-nav py-0"><a class="nav-link playfair-font" href="/accounts/login/"  >&nbsp;Login</a></li>
-        			<li class="signup-nav py-0"><a class="nav-link playfair-font" href="/accounts/signup/"  >&nbsp;Signup</a></li>
-                                <li class="logout-nav py-0 playfair-font"><a class="nav-link" href="/accounts/logout/"  >&nbsp;Logout</a></li>
-                                &nbsp;<li class="settings-nav py-0 playfair-font"><a href="/accounts/settings/" class="nav-link"  >&nbsp;Settings</a></li>
+
+                    &nbsp;<li class="nav-item dropdown py-0">
+                        <a class="nav-link dropdown-toggle playfair-font" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Accounts
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="/accounts/login/" class="dropdown-item playfair-font" style="color: black;">Login</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/accounts/signup/" class="dropdown-item playfair-font" style="color: black;">Signup</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/accounts/logout/" class="dropdown-item playfair-font" style="color: black;">Logout</a>
+                        </div>
+                    </li>
+
+                                &nbsp;<li class="settings-nav py-0 playfair-font"><a href="/accounts/settings/" class="nav-link"  >Settings</a></li>
+                                &nbsp;<li class="seller-nav py-0 playfair-font"> <a href="/accounts/seller/" class="nav-link">Seller</a> </li>
     			</ul>
                 <!--<ul class="navbar-nav ml-auto hidden-xs" style="vertical-align: middle;">
                     &nbsp;<li class="nav-item hidden-xs">
@@ -225,6 +237,7 @@
                     <a href="/accounts/signup/">Signup</a>
                     <a href="/accounts/logout/">Logout</a>
                     <a href="/accounts/settings/">Settings</a>
+                    <a href="/accounts/seller/">Seller</a>
                 </div>
             </div>
             <div class="overlay2" id="mySearch">
