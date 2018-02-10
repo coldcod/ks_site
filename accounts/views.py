@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -99,7 +100,7 @@ def signup(req):
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
-            try:
+            #try:
                 instance = form.save(commit=False)
                 raw_psswd = form.cleaned_data.get('password2')
                 email = form.cleaned_data.get('email')
@@ -137,8 +138,10 @@ def signup(req):
                 instance.profile.save()
                 instance.save()
 
+                if (req.get_full_path().find('seller') is not -1):
+                    return HttpResponseRedirect('/admin/')
                 return redirect('send_activation_email')
-            except Exception as e:
+            #except Exception as e:
                 return render(req, 'accounts/signup.html', {'form': form, 'tm': "Email already registered."})
     else:
         form = SignUpForm()
@@ -151,6 +154,19 @@ def signup(req):
         'categories': categories,
     }
     return render(req, 'accounts/signup.html', context)
+
+def seller(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    context = {
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
+    }
+    return render(req, 'accounts/seller.html', context)
 
 def activate(req, uid, token):
     uid = force_text(urlsafe_base64_decode(uid))
