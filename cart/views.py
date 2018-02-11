@@ -80,7 +80,7 @@ def confirmed(req):
         email = req.POST.get('email')
 
         # To MANAGEMENT
-        subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
+        subject = "[TD_ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
         prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
         author_email = prod.author.email if prod else ''
         orders = None if pid is not '' and pid is not None else get_cart_info(req)
@@ -118,6 +118,7 @@ def confirmed(req):
                 html_content = render_to_string('cart/order.html', context)
                 text_content = strip_tags(html_content)
                 _from = "TheDecorista.in@gmail.com"
+                subject = "[TD_ORDER] " + str(order.product.title)
                 send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER
@@ -184,6 +185,7 @@ def confirmed(req):
                 html_content = render_to_string('cart/order.html', context)
                 text_content = strip_tags(html_content)
                 _from = "TheDecorista.in@gmail.com"
+                subject = "[TD_ORDER] " + str(order.product.title)
                 send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER

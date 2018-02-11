@@ -34,7 +34,11 @@
 {% endif %}
 
 <div class="bs-example">
+    {% if "seller" in request.get_full_path %}
+    <form action="{% url 'login-seller' %}" method="post">
+    {% else %}
     <form action="{% url 'login' %}" method="post">
+    {% endif %}
         {% csrf_token %}
         <div class="form-group">
             <label for="inputEmail">Email:</label>&nbsp;
@@ -47,10 +51,19 @@
         <div class="checkbox">
             <label><input type="checkbox"> Remember me</label>
         </div><br>
-        <input type="hidden" name="next" value="/store/" />
+        <input type="hidden" name="next" id="next" />
         <button type="submit" class="btn btn-primary" value="login">Login</button>
     </form>
 </div>
+
+<script type="text/javascript">
+    function getNextValue() {
+        return (window.location.href.indexOf('seller') != -1) ? "/admin/" : "/store/";
+    }
+    $(document).ready(function() {
+        document.getElementById('next').value = getNextValue();
+    });
+</script>
 
 {% endblock %}
 <br>
