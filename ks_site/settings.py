@@ -44,6 +44,10 @@ EMAIL_HOST_USER = 'TheDecorista.in@gmail.com'
 EMAIL_HOST_PASSWORD = 'pankaj1490'
 EMAIL_PORT = 587
 
+# Instamojo vars
+API_KEY = 'aea624c92715409aaef627f837084296'
+AUTH_TOKEN = 'cb0db22de460a27c4bec151d7cda7f9f'
+
 # Application definition
 
 INSTALLED_APPS = [

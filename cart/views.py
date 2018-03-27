@@ -1,16 +1,23 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from get_cart_kssite.get_cart import get_cart, get_cart_info, get_user_cart, get_session_cart
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from instamojo_wrapper import Instamojo
 import sys
 sys.path.append('../')
 from cart.models import Cart
 from store.models import Product
 from accounts.models import Profile
+
+API_KEY = settings.API_KEY
+AUTH_TOKEN = settings.AUTH_TOKEN
+
+api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://www.instamojo.com/@Decorista/')
 
 # Create your views here.
 
@@ -58,7 +65,21 @@ def addressFilledBuyout(req):
         req.user.profile.save()
         req.user.save()
     pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
-    return redirect('/cart/confirmed'+pid)
+    # return redirect('/cart/confirmed'+pid)
+    prod = Product.objects.get(pid=str(req.GET.get('p')).replace('/', '') )
+    purpose = prod.title
+    fname = req.user.first_name
+    lname = req.user.last_name
+    fullname = fname + ' ' + lname
+    amount = prod.price
+    response = api.payment_request_create(
+        amount = amount,
+        purpose = purpose,
+        send_email = False,
+        buyer_name = fullname,
+        redirect_url = req.build_absolute_uri('admin')
+    )
+    return HttpResponseRedirect(response['payment_request']['longurl'])
 
 def confirmed(req):
     orders = get_cart_info(req)
