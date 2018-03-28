@@ -17,7 +17,7 @@ from accounts.models import Profile
 API_KEY = settings.API_KEY
 AUTH_TOKEN = settings.AUTH_TOKEN
 
-api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://www.instamojo.com/@Decorista/')
+api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN)
 
 # Create your views here.
 
@@ -59,25 +59,45 @@ def cart(req):
 
 def addressFilledBuyout(req):
     if req.method == 'POST':
-        req.user.profile.address = req.POST.get("address", '')
-        req.user.first_name = req.POST.get("first_name", '')
-        req.user.last_name = req.POST.get("last_name", '')
-        req.user.profile.save()
-        req.user.save()
-    pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
+        if req.user.is_authenticated():
+            req.user.profile.address = req.POST.get("address", '')
+            req.user.first_name = req.POST.get("first_name", '')
+            req.user.last_name = req.POST.get("last_name", '')
+            req.user.profile.save()
+            req.user.save()
+            email = req.user.email
+            address = req.user.profile.address
+            fname = req.user.first_name
+            lname = req.user.last_name
+        else :
+            address = req.POST.get("address", '')
+            fname = req.POST.get("first_name", '')
+            lname = req.POST.get("last_name", '')
+            email = req.POST.get("email", '')
+
+    if req.GET.get('pid') is not None:
+        amount = prod.price
+        prod = Product.objects.get(pid=str(req.GET.get('p')).replace('/', '') )
+        purpose = prod.title
+    else:
+        cart_info = get_cart_info(req)
+        amount = cart_info['total']
+        orders = cart_info['orders']
+        arr = []
+        for order in orders:
+            arr.append(order.product.title)
+        purpose = ", ".join(arr)
+
+    #pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
     # return redirect('/cart/confirmed'+pid)
-    prod = Product.objects.get(pid=str(req.GET.get('p')).replace('/', '') )
-    purpose = prod.title
-    fname = req.user.first_name
-    lname = req.user.last_name
     fullname = fname + ' ' + lname
-    amount = prod.price
     response = api.payment_request_create(
         amount = amount,
         purpose = purpose,
         send_email = False,
         buyer_name = fullname,
-        redirect_url = req.build_absolute_uri('admin')
+        email = email,
+        redirect_url = req.build_absolute_uri('store')
     )
     return HttpResponseRedirect(response['payment_request']['longurl'])
 

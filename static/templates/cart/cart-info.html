@@ -57,7 +57,7 @@
 
         {% else %}
 
-            <form action="/cart/confirmed/" method="post">
+            <form action="/cart/addressFilledBuyout/" method="post">
                 {% csrf_token %}
                 Email: <input type="email" name="email"><br>
                 Address: <input type="text" name="address"><br>
