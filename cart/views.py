@@ -38,9 +38,9 @@ def cart(req):
     user_cart = get_user_cart(req)
     session_cart = get_session_cart(req)
     cart_info = get_cart_info(req)
-    address_not_filled = req.user.profile.address == '' if req.user.is_authenticated() else ''
-    first_name_not_filled = req.user.first_name == '' if req.user.is_authenticated() else ''
-    last_name_not_filled = req.user.last_name == '' if req.user.is_authenticated() else ''
+    address_not_filled = req.user.profile.address == '' if req.user.is_authenticated else ''
+    first_name_not_filled = req.user.first_name == '' if req.user.is_authenticated else ''
+    last_name_not_filled = req.user.last_name == '' if req.user.is_authenticated else ''
     context = {
         'cart_info': cart_info,
         'categories': categories,
@@ -53,13 +53,13 @@ def cart(req):
         'first_name_not_filled': first_name_not_filled,
         'last_name_not_filled': last_name_not_filled,
         'usr': req.user,
-        'authenticated': req.user.is_authenticated()
+        'authenticated': req.user.is_authenticated
     }
     return render(req, 'cart/cart-info.html', context)
 
 def addressFilledBuyout(req):
     if req.method == 'POST':
-        if req.user.is_authenticated():
+        if req.user.is_authenticated:
             req.user.profile.address = req.POST.get("address", '')
             req.user.first_name = req.POST.get("first_name", '')
             req.user.last_name = req.POST.get("last_name", '')
@@ -117,7 +117,7 @@ def confirmed(req):
         pid = req.GET.get('p').replace('/', '')
     else:
         pid = None'''
-    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+    boolean = req.user.is_authenticated and str(req.user.is_anonymous) == "CallableBool(False)"
 
 
     # Taking orders from guests
@@ -317,7 +317,7 @@ def buy(req):
     categories = list(set(Product.objects.all().values_list('category', flat=True)))
     cart_info = get_cart_info(req)
     pid = req.GET.get('p', '')
-    boolean = req.user.is_authenticated() and str(req.user.is_anonymous) == "CallableBool(False)"
+    boolean = req.user.is_authenticated and str(req.user.is_anonymous) == "CallableBool(False)"
     if boolean is not True:
         product = Product.objects.get(pid=pid)
         usr = req.user
