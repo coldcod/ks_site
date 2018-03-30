@@ -15,7 +15,7 @@ from django.utils.html import strip_tags
 from get_cart_kssite import get_cart
 from django.contrib.auth.models import Permission
 
-from .forms import SignUpForm, ProfileForm
+from .forms import SignUpForm, ProfileForm, SellerSignupForm1, SellerSignupForm2, SellerSignupForm3
 from .tokens import account_activation_token
 
 import sys
@@ -100,7 +100,7 @@ def signup(req):
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
-            #try:
+            try:
                 instance = form.save(commit=False)
                 raw_psswd = form.cleaned_data.get('password2')
                 email = form.cleaned_data.get('email')
@@ -110,7 +110,7 @@ def signup(req):
 
                 # --- Adding permissions for normally signing up users to access admin page and list, edit their products ---
 
-                instance.is_staff = True
+                """instance.is_staff = True
 
                 permission = Permission.objects.get(name='Can add product')
                 instance.user_permissions.add(permission)
@@ -128,7 +128,7 @@ def signup(req):
                 instance.user_permissions.add(permission)
 
                 permission = Permission.objects.get(name='Can delete product images')
-                instance.user_permissions.add(permission)
+                instance.user_permissions.add(permission)"""
 
                 # --- end of permissions ---
 
@@ -141,7 +141,7 @@ def signup(req):
                 if (req.get_full_path().find('seller') is not -1):
                     return HttpResponseRedirect('/admin/')
                 return redirect('send_activation_email')
-            #except Exception as e:
+            except Exception as e:
                 return render(req, 'accounts/signup.html', {'form': form, 'tm': "Email already registered."})
     else:
         form = SignUpForm()
@@ -167,6 +167,142 @@ def seller(req):
         'categories': categories,
     }
     return render(req, 'accounts/seller.html', context)
+
+def seller_signup1(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    form = SellerSignupForm1()
+    context = {
+        'form': form,
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'] or 0,
+        'count': orders['count'] or 0,
+        'categories': categories,
+    }
+    return render(req, 'accounts/seller/signup1.html', context)
+
+def seller_signup2(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    if req.method == 'POST':
+        form = SellerSignupForm1(req.POST)
+        if form.is_valid():
+            try:
+                instance = form.save(commit=False)
+                raw_psswd = form.cleaned_data.get('password2')
+                email = form.cleaned_data.get('email')
+                pno = form.cleaned_data.get('phone')
+                name = form.cleaned_data.get('name')
+                alt_phone = form.cleaned_data.get('alternate_phone')
+                address = form.cleaned_data.get('address')
+                instance.username = email
+                instance.save()
+
+                # --- Adding permissions for signing up sellers to access admin page and list, edit their products ---
+
+                instance.is_staff = True
+
+                permission = Permission.objects.get(name='Can add product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can change product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can delete product')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can add product images')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can change product images')
+                instance.user_permissions.add(permission)
+
+                permission = Permission.objects.get(name='Can delete product images')
+                instance.user_permissions.add(permission)
+
+                # --- end of permissions ---
+
+                instance.profile.email_confirmed = True
+                instance.profile.phone_number = pno
+                instance.profile.alt_phone_number = alt_phone
+                instance.profile.name = name
+                instance.email = email
+                instance.profile.address = address
+
+                login(req, instance)
+                instance.profile.save()
+                instance.save()
+            except Exception as e:
+                return render(req, 'accounts/seller/signup1.html', {'form': form, 'tm': "Email already registered."})
+
+        form = SellerSignupForm2()
+        context = {
+            'form': form,
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': orders['total'] or 0,
+            'count': orders['count'] or 0,
+            'categories': categories,
+        }
+        return render(req, 'accounts/seller/signup2.html', context)
+
+    else:
+        return redirect('store_index')
+
+def seller_signup3(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    if req.method == 'POST':
+        form = SellerSignupForm2(req.POST)
+        if form.is_valid():
+            try:
+                req.user.profile.shopname = form.cleaned_data.get('name_of_your_shop')
+                req.user.profile.gst = form.cleaned_data.get('GST_No')
+                req.user.profile.pan = form.cleaned_data.get('PAN_No')
+                req.user.profile.save()
+                req.user.save()
+            except Exception as e:
+                return HttpResponse("An error has occured. Please contact for support.")
+
+        form = SellerSignupForm3()
+        context = {
+            'form': form,
+            'cart_info': cart_info,
+            'orders': orders,
+            'total': orders['total'] or 0,
+            'count': orders['count'] or 0,
+            'categories': categories,
+        }
+        return render(req, 'accounts/seller/signup3.html', context)
+
+    else:
+        return redirect('store_index')
+
+def seller_signup4(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+    if req.method == 'POST':
+        form = SellerSignupForm3(req.POST)
+        if form.is_valid():
+            try:
+                req.user.profile.prodtype = form.cleaned_data.get('type_of_products_you_want_to_sell')
+                req.user.profile.accountholder = form.cleaned_data.get('name_as_account_holder')
+                req.user.profile.account_number = form.cleaned_data.get('account_number')
+                req.user.profile.IFSC_code = form.cleaned_data.get('IFSC_code')
+                req.user.profile.save()
+                req.user.save()
+            except Exception as e:
+                return HttpResponse("An error has occured. Please contact for support.")
+
+        return HttpResponseRedirect('/admin/')
+
+    else:
+        return redirect('store_index')
 
 def activate(req, uid, token):
     uid = force_text(urlsafe_base64_decode(uid))

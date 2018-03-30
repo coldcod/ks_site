@@ -22,6 +22,12 @@ urlpatterns = [
     url(r'^seller-signup/$', views.signup, name="seller-signup"),
     url(r'^seller-login/$', auth_views.LoginView.as_view(template_name='accounts/login.html', redirect_field_name="next"), name="seller-login"),
     #url(r'^to-admin/$', RedirectView.as_view(url=reverse('admin'))),
+
+    url(r'^seller/signup/$', views.seller_signup1, name="seller_signup1"),
+    url(r'^seller/signup2/$', views.seller_signup2, name="seller_signup2"),
+    url(r'^seller/signup3/$', views.seller_signup3, name="seller_signup3"),
+    url(r'^seller/signup4/$', views.seller_signup4, name="seller_signup4"),
+
     url(r'^xyz/$', views.xyz),
     url(r'^abc/$', views.abc)
 ]
