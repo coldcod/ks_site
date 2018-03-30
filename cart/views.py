@@ -91,16 +91,23 @@ def addressFilledBuyout(req):
     #pid = "?p=" + str(req.GET.get('p')) if req.GET.get('p') else '/'
     # return redirect('/cart/confirmed'+pid)
     fullname = fname + ' ' + lname
+    req.session['amount'] = amount
+    req.session['purpose'] = purpose
+    req.session['fullname'] = fullname
+    req.session['email'] = email
+
     response = api.payment_request_create(
         amount = amount,
         purpose = purpose,
         send_email = False,
         buyer_name = fullname,
         email = email,
-        redirect_url = req.build_absolute_uri('store')
+        redirect_url = req.build_absolute_uri('placement_webhook'),
+        webhook = req.build_absolute_uri('placement_webhook')
     )
     return HttpResponseRedirect(response['payment_request']['longurl'])
 
+@csrf_exempt
 def confirmed(req):
     orders = get_cart_info(req)
     categories = list(set(Product.objects.all().values_list('category', flat=True)))
@@ -260,6 +267,49 @@ def confirmed(req):
 
     else:
         return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>), have filled out your first and last name as well as address (<a class='text_links' href='/accounts/settings/'>Settings</a>) and try placing your order again.")
+
+def confirmed_(req):
+    if req.POST.get('status') == 'Credit':
+        amount = req.POST.get('amount')
+        buyer_email = req.POST.get('buyer')
+        name = req.POST.get('buyer_name')
+        mac = req.POST.get('mac')
+        purpose = req.POST.get('purpose')
+        address = req.session.get('address')
+
+        try:
+            multiple_prods = purpose.index(',')
+        except ValueError as e:
+            multiple_prods = -1
+
+        if multiple_prods is -1:
+            context = {
+                'name': name,
+                'address': address,
+                'email': buyer_email,
+                'prod': Products.objects.get(title=purpose),
+                'amount': amount
+            }
+            c_subject = "Your order for " + purpose + " has been received | The Decorista"
+            m_subject = "[ORDER] " + purpose
+            author_email = Products.objects.get(title=purpose).author.email
+            c_html_content = render_to_string('cart/SingleOrderCust.html', context)
+            c_text_content = strip_tags(c_html_content)
+            m_html_content = render_to_string('cart/SingleOrderMgmt.html', context)
+            m_text_content = strip_tags(m_html_content)
+
+            send_mail(c_subject, c_text_content, "TheDecorista.in@gmail.com", [email])
+
+            send_mail(m_subject, m_text_content, "TheDecorista.in@gmail.com", [author_email])
+
+    context = {
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': 0,
+        'count': 0,
+        'categories': categories,
+    }
+    return render(req, 'cart/placed.html', context)
 
 @csrf_exempt
 def buy(req):
