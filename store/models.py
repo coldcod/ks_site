@@ -38,7 +38,7 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
 class ProductImages(models.Model):
-    product = models.ForeignKey(Product, related_name="images")
+    product = models.ForeignKey(Product, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField()
     def __str__(self):
         return str(self.image)
