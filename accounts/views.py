@@ -134,9 +134,9 @@ def signup(req):
 
                 instance.profile.email_confirmed = False
                 instance.profile.phone_number = pno
-                login(req, instance)
                 instance.profile.save()
                 instance.save()
+                login(req, instance)
                 return redirect('send_activation_email')
             except Exception as e:
                 return render(req, 'accounts/signup.html', {'form': form, 'tm': "Email already registered."})
