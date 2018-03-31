@@ -268,6 +268,7 @@ def confirmed(req):
     else:
         return HttpResponse("Unexpected Error. Please make sure you're logged in (if not, <a class='text_links' href='/accounts/login/'>log in</a>), have filled out your first and last name as well as address (<a class='text_links' href='/accounts/settings/'>Settings</a>) and try placing your order again.")
 
+@csrf_exempt
 def confirmed_(req):
     if req.POST.get('status') == 'Credit':
         amount = req.POST.get('amount')
