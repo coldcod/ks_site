@@ -5,7 +5,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=256, required=True)
-    phone = forms.CharField()
+    phone = forms.CharField(min_length=10)
 
     class Meta:
         model = User
