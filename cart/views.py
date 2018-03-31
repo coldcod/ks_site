@@ -75,9 +75,15 @@ def addressFilledBuyout(req):
             lname = req.POST.get("last_name", '')
             email = req.POST.get("email", '')
 
-    if req.GET.get('pid') is not None:
-        amount = prod.price
+    else:
+        email = req.user.email
+        address = req.user.profile.address
+        fname = req.user.first_name
+        lname = req.user.last_name
+
+    if req.GET.get('p') is not None:
         prod = Product.objects.get(pid=str(req.GET.get('p')).replace('/', '') )
+        amount = prod.price
         purpose = prod.title
     else:
         cart_info = get_cart_info(req)
@@ -95,6 +101,7 @@ def addressFilledBuyout(req):
     req.session['purpose'] = purpose
     req.session['fullname'] = fullname
     req.session['email'] = email
+    req.session['address'] = address
 
     response = api.payment_request_create(
         amount = amount,
