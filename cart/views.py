@@ -288,7 +288,8 @@ def confirmed_(req):
                 'address': address,
                 'email': buyer_email,
                 'prod': Products.objects.get(title=purpose),
-                'amount': amount
+                'amount': amount,
+                'quantity': 1
             }
             c_subject = "Your order for " + purpose + " has been received | The Decorista"
             m_subject = "[ORDER] " + purpose
@@ -298,9 +299,42 @@ def confirmed_(req):
             m_html_content = render_to_string('cart/SingleOrderMgmt.html', context)
             m_text_content = strip_tags(m_html_content)
 
-            send_mail(c_subject, c_text_content, "TheDecorista.in@gmail.com", [email])
+            send_mail(c_subject, c_text_content, "TheDecorista.in@gmail.com", [buyer_email])
 
             send_mail(m_subject, m_text_content, "TheDecorista.in@gmail.com", [author_email])
+
+        elif multiple_prods is not -1:
+            orders = get_cart_info(req)
+            context = {
+                'name': name,
+                'address': address,
+                'email': buyer_email,
+                'amount': amount,
+                'orders': orders
+            }
+            c_subject = "Your order has been received | The Decorista"
+            c_html_content = render_to_string('cart/MultipleOrderCust.html', context)
+            c_text_content = strip_tags(c_html_content)
+            send_mail(c_subject, c_text_content, "TheDecorista.in@gmail.com", [buyer_email])
+            for order in orders['orders']:
+                context = {
+                    'name': name,
+                    'address': address,
+                    'email': buyer_email,
+                    'amount': amount,
+                    'prod': order.product,
+                    'quantity': order.quantity
+                }
+                m_subject = "You have received an order for " + order.product.title + ". | The Decorista"
+                m_html_content = render_to_string('cart/SingleOrderMgmt.html', context)
+                m_text_content = strip_tags(m_html_content)
+                send_mail(m_subject, m_text_content, "TheDecorista.in@gmail.com", [order.product.author.email])
+            cart = get_cart(req)
+            for order in orders['orders']:
+                cart._remove(order.product.pid)
+
+    else:
+        return HttpResponse("Your payment has failed. Please try again, or contact for support.")
 
     context = {
         'cart_info': cart_info,

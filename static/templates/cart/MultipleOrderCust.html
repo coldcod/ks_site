@@ -1,0 +1,22 @@
+Dear {{name}}, {{email}}<br>
+Your order for the following products has been received. The products will be shipped as soon as possible.
+<br>
+<hr>
+<br>
+<ol>
+    {% for order in orders.orders %}
+        <li>{{order.product.title}} - Rs. {{order.product.price}}, Quantity - {{order.quantity}}</li>
+    {% endfor %}
+</ol>
+<br>
+Total amount - {{amount}}
+<br>
+<hr>
+<br>
+Your order will be shipped to the following address:
+{{address}}
+<br>
+<hr>
+For any enquiries, please contact us at TheDecorista.in@gmail.com <br> <br>
+Best Regards,
+The Decorista
