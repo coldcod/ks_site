@@ -85,7 +85,7 @@ def send_activation_email(req):
         'user': instance,
         'domain': current_site.domain,
         # user.pk a.k.a user.id
-        'uid': urlsafe_base64_encode(force_bytes(instance.pk)),
+        'uid': urlsafe_base64_encode(force_bytes(instance.pk)).decode(),
         'token': account_activation_token.make_token(instance),
     })
     send_mail("Activate Your Account | The Decorista", message, "TheDecorista.in@gmail.com", [instance.email])
@@ -139,7 +139,7 @@ def signup(req):
                 instance.save()
                 return redirect('send_activation_email')
             except Exception as e:
-                return render(req, 'accounts/signup.html', {'form': form, 'tm': e})
+                return render(req, 'accounts/signup.html', {'form': form, 'tm': "Email already registered."})
     else:
         form = SignUpForm()
     context = {
@@ -233,7 +233,7 @@ def seller_signup2(req):
                 instance.profile.save()
                 instance.save()
             except Exception as e:
-                return render(req, 'accounts/seller/signup1.html', {'form': form, 'tm': e})
+                return render(req, 'accounts/seller/signup1.html', {'form': form, 'tm': "Email already registered."})
 
         form = SellerSignupForm2()
         context = {
