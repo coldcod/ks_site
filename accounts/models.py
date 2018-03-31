@@ -22,7 +22,7 @@ class Profile(models.Model):
     account_number = models.CharField(max_length=200)
     IFSC_code = models.CharField(max_length=200)
     def __str__(self):
-        return str(self.address) + ' - ' + str(self.cc)
+        return str(self.name) + " - " + str(self.shopname)
 
 @receiver(post_save, sender=User)
 def add_profile_info(sender, instance, created, **kwargs):
