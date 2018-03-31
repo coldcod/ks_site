@@ -11,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'author', None) is None:
             obj.author = request.user
+            obj.shop_name = request.user.profile.shopname
         obj.save()
     def get_queryset(self, request):
         qs = super(ProductAdmin, self).get_queryset(request)
@@ -21,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'author', 'discount_in_percent','stock', 'pubdate', 'pid', 'category']
     list_filter = ['pubdate']
     inlines = [ProductImagesInline]
-    fields = ['description', 'title', 'category', 'price', 'notes','discount_in_percent','daysBeforeShipping', 'img', 'stock']
+    fields = ['description', 'title', 'category', 'price', 'shop_name','discount_in_percent','daysBeforeShipping', 'img', 'stock']
 
 admin.site.register(Product, ProductAdmin)
 
