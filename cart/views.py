@@ -135,7 +135,7 @@ def confirmed(req):
         email = req.POST.get('email')
 
         # To MANAGEMENT
-        subject = "[TD_ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
+        subject = "[TD_ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Product"
         prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
         author_email = prod.author.email if prod else ''
         orders = None if pid is not '' and pid is not None else get_cart_info(req)
@@ -177,7 +177,7 @@ def confirmed(req):
                 send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER
-        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
+        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Product"
         context = {
             'no_err': True,
             'usr': req.user,
@@ -211,7 +211,7 @@ def confirmed(req):
     # Taking orders from logged in and valid users
     if boolean and req.user.email and req.user.profile.address is not '' and req.user.first_name is not '' and req.user.last_name is not '':
         # To MANAGEMENT
-        subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Products"
+        subject = "[ORDER] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[ORDER] Various Product"
         prod = Product.objects.get(pid=pid.replace('/', '')) if pid is not '' and pid is not None else None
         orders = None if pid is not '' and pid is not None else get_cart_info(req)
 
@@ -244,7 +244,7 @@ def confirmed(req):
                 send_mail(subject, text_content, _from, [order.product.author.email])
 
         # To CUSTOMER
-        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Products"
+        subject = "[Order Received] " + str(Product.objects.get(pid=pid.replace('/', '')).title) if pid else "[Order Received] Various Product"
         context = {
             'no_err': True,
             'usr': req.user,
@@ -295,13 +295,13 @@ def confirmed_(req):
                 'name': name,
                 'address': address,
                 'email': buyer_email,
-                'prod': Products.objects.get(title=purpose),
+                'prod': Product.objects.get(title=purpose),
                 'amount': amount,
                 'quantity': 1
             }
             c_subject = "Your order for " + purpose + " has been received | The Decorista"
             m_subject = "[ORDER] " + purpose
-            author_email = Products.objects.get(title=purpose).author.email
+            author_email = Product.objects.get(title=purpose).author.email
             c_html_content = render_to_string('cart/SingleOrderCust.html', context)
             c_text_content = strip_tags(c_html_content)
             m_html_content = render_to_string('cart/SingleOrderMgmt.html', context)
