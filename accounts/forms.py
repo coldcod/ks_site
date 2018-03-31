@@ -21,12 +21,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['email_confirmed',]
-        fields = ['cc', 'address', 'first_name', 'last_name',]
+        fields = ['address', 'first_name', 'last_name',]
 
 class SellerSignupForm1(UserCreationForm):
     email = forms.EmailField(max_length=256, required=True)
-    phone = forms.CharField()
-    alternate_phone = forms.CharField()
+    phone = forms.CharField(min_length=10)
+    alternate_phone = forms.CharField(min_length=10)
     address = forms.CharField()
     name = forms.CharField()
 
@@ -42,8 +42,8 @@ class SellerSignupForm2(UserCreationForm):
         del self.fields['password1']
 
     name_of_your_shop = forms.CharField()
-    GST_No = forms.CharField()
-    PAN_No = forms.CharField()
+    GST_No = forms.CharField(min_length=12, max_length=12)
+    PAN_No = forms.CharField(min_length=10, max_length=10)
 
     class Meta:
         model = User
@@ -59,7 +59,7 @@ class SellerSignupForm3(UserCreationForm):
     type_of_products_you_want_to_sell = forms.CharField(initial="Bakery")
     name_as_account_holder = forms.CharField()
     account_number = forms.CharField()
-    IFSC_code = forms.CharField()
+    IFSC_code = forms.CharField(min_length=11, max_length=11)
 
     class Meta:
         model = User
