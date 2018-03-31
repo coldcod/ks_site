@@ -100,7 +100,7 @@ def signup(req):
     if req.method == 'POST':
         form = SignUpForm(req.POST)
         if form.is_valid():
-            #try:
+            try:
                 instance = form.save(commit=False)
                 raw_psswd = form.cleaned_data.get('password2')
                 email = form.cleaned_data.get('email')
@@ -138,8 +138,8 @@ def signup(req):
                 instance.profile.save()
                 instance.save()
                 return redirect('send_activation_email')
-            #except Exception as e:
-                return render(req, 'accounts/signup.html', {'form': form, 'tm': "Email already registered."})
+            except Exception as e:
+                return render(req, 'accounts/signup.html', {'form': form, 'tm': e})
     else:
         form = SignUpForm()
     context = {
@@ -187,7 +187,7 @@ def seller_signup2(req):
     if req.method == 'POST':
         form = SellerSignupForm1(req.POST)
         if form.is_valid():
-            #try:
+            try:
                 instance = form.save(commit=False)
                 raw_psswd = form.cleaned_data.get('password2')
                 email = form.cleaned_data.get('email')
@@ -232,8 +232,8 @@ def seller_signup2(req):
                 login(req, instance)
                 instance.profile.save()
                 instance.save()
-            #except Exception as e:
-                return render(req, 'accounts/seller/signup1.html', {'form': form, 'tm': "Email already registered."})
+            except Exception as e:
+                return render(req, 'accounts/seller/signup1.html', {'form': form, 'tm': e})
 
         form = SellerSignupForm2()
         context = {
