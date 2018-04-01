@@ -311,6 +311,11 @@ def confirmed_(req):
 
             send_mail(m_subject, m_text_content, "TheDecorista.in@gmail.com", [author_email])
 
+            k_subject = Product.objects.get(title=purpose).author.profile.shopname + " has made a sale."
+            k_html_content = render_to_string('cart/SingleOrderK.html', context)
+            k_text_content = strip_tags(k_html_content)
+            send_mail(k_subject, k_text_content, "TheDecorista.in@gmail.com", ["TheDecorista.in@gmail.com"])
+
         elif multiple_prods is not -1:
             orders = get_cart_info(req)
             context = {
