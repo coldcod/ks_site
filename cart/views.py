@@ -344,6 +344,7 @@ def confirmed_(req):
     else:
         return HttpResponse("Your payment has failed. Please try again, or contact for support.")
 
+    cart_info = get_cart_info(req)
     context = {
         'cart_info': cart_info,
         'orders': orders,
