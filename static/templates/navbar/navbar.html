@@ -40,13 +40,15 @@
         </script>
         <style media="screen">
             #myNavbar {
-                background-color: #0a0a0d;
+                background-color: #004393;
+                border-bottom: 3.5px solid #00d690;
+                box-shadow: inset 0 -3.5px 0 #0eb7c8;
             }
             .brand-logo {
-                height: 7.5%;
+                height: 6.0%;
             }
             .navbar-toggler {
-                background-color: #0a0a0d;
+                background-color: #004393;
                 border: none;
             }
             .navbar-toggler-icon {
@@ -54,7 +56,7 @@
                 color: white;
             }
             .navbar-default .navbar-toggle {
-                background-color: #0a0a0d;
+                background-color: #004393;
             }
             .search-button-mobile {
                 display: none;
@@ -67,7 +69,8 @@
                 border-bottom: 3px solid #08909e;
                 box-shadow: inset 0 -3.0px 0 #00d690;
                 bottom: 0 !important;
-                background-color: #0a0a0d !important;
+                background-color: #040446 !important;
+                border-radius: 2px;
                 height: 100% !important;
                 text-decoration: bold !important;
             }
@@ -76,7 +79,7 @@
                     width: 30%;
                 }
                 .brand-logo {
-                    height: 9%;
+                    height: 7.5%;
                 }
                 .search-input-form {
                     display: none;
@@ -221,13 +224,13 @@
     		</div>
             <div class="navbar-header ml-auto pull-right">
                 <ul class="nav navbar-nav">
-                  <li><span class="search-button-mobile" style="color:white;" onclick="openSearch()"><i class="fa fa-search basic-addon2" aria-hidden="true" style="background-color: #0a0a0d; border: none; color: white;"></i></span> <input onsubmit="search_submit()" class="search-input-form" type="text" style="width:50% !important; background-color:#003459; color: #fff; border: none; height: 40px;" placeholder="  Search" name="q" aria-describedby="basic-addon2"><span class="after-search-space">&nbsp;&nbsp;</span><i onclick="search_submit()" class="fa fa-search basic-addon2 search-input-icon" aria-hidden="true" style="background-color: #0a0a0d; border: none; color: white;"></i> &nbsp;|&nbsp; <a href="/cart/"   id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a> &nbsp;&nbsp;&nbsp;</li>
+                  <li><span class="search-button-mobile" style="color:white;" onclick="openSearch()"><i class="fa fa-search basic-addon2" aria-hidden="true" style="background-color: #004393; border: none; color: white;"></i></span> <input onsubmit="search_submit()" class="search-input-form" type="text" style="width:50% !important; background-color:#fff; color: #fff; border-radius: 2px; border: none; height: 40px;" placeholder="  Search" name="q" aria-describedby="basic-addon2"><span class="after-search-space">&nbsp;&nbsp;</span><i onclick="search_submit()" class="fa fa-search basic-addon2 search-input-icon" aria-hidden="true" style="background-color: #004393; border: none; color: white;"></i> &nbsp;<span style="color: #fff;">|</span>&nbsp; <a href="/cart/"   id="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;-&nbsp;<span class="badge">{{count}} - ₹{{total}}</span></a> &nbsp;&nbsp;&nbsp;</li>
 
                 </ul>
 
             </div>
             <button class="navbar-toggler" type="button"  data-target="#navbarSupportedContent" onclick="openNav()" aria-expanded="false" aria-label="Toggle navigation">
-                <span style="background-color:#0a0a0d; color:#fff;">&#9776;</span>
+                <span style="background-color:#004393; color:#fff;">&#9776;</span>
             </button>
             <div id="myNav" class="overlay">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
