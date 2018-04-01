@@ -29,6 +29,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
         hash_pid = pid.make_token(self)
+        self.shop_name = self.author.profile.shopname
         self.pid = hash_pid
         self.title = self.title.title()
         self.category = self.category.title()
