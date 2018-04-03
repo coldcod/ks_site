@@ -118,30 +118,6 @@ def signup(req):
                 instance.username = email
                 instance.save()
 
-                # --- Adding permissions for normally signing up users to access admin page and list, edit their products ---
-
-                """instance.is_staff = True
-
-                permission = Permission.objects.get(name='Can add product')
-                instance.user_permissions.add(permission)
-
-                permission = Permission.objects.get(name='Can change product')
-                instance.user_permissions.add(permission)
-
-                permission = Permission.objects.get(name='Can delete product')
-                instance.user_permissions.add(permission)
-
-                permission = Permission.objects.get(name='Can add product images')
-                instance.user_permissions.add(permission)
-
-                permission = Permission.objects.get(name='Can change product images')
-                instance.user_permissions.add(permission)
-
-                permission = Permission.objects.get(name='Can delete product images')
-                instance.user_permissions.add(permission)"""
-
-                # --- end of permissions ---
-
                 instance.profile.email_confirmed = False
                 instance.profile.phone_number = pno
                 instance.profile.save()
@@ -162,10 +138,26 @@ def signup(req):
     }
     return render(req, 'accounts/signup.html', context)
 
+def my_account(req):
+    orders = get_cart.get_cart_info(req)
+    categories = list(set(Product.objects.all().values_list('category', flat=True)))
+    cart_info = get_cart.get_cart_info(req)
+
+    context = {
+        'cart_info': cart_info,
+        'orders': orders,
+        'total': orders['total'],
+        'count': orders['count'],
+        'categories': categories,
+    }
+
+    return render(req, 'accounts/my_account.html', context)
+
 def seller(req):
     orders = get_cart.get_cart_info(req)
     categories = list(set(Product.objects.all().values_list('category', flat=True)))
     cart_info = get_cart.get_cart_info(req)
+
     context = {
         'cart_info': cart_info,
         'orders': orders,
@@ -173,6 +165,10 @@ def seller(req):
         'count': orders['count'] or 0,
         'categories': categories,
     }
+
+    if req.user.is_authenticated and req.user.profile.shopname is not None:
+        return redirect('/accounts/my_account/')
+
     return render(req, 'accounts/seller.html', context)
 
 def seller_signup1(req):

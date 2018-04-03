@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(template_name='accounts/login.html', redirect_field_name='next'), name="login"),
     url(r'^login-seller/$', auth_views.LoginView.as_view(template_name='accounts/login.html', redirect_field_name='next'), name="login-seller"),
     url(r'^logout/$', views.signout, name="signout"),
+    url(r'^my_account/$', views.my_account, name="my_account"),
     url(r'^settings/$', views.settings, name="settings"),
     url(r'^send_activation_email/$', views.send_activation_email, name="send_activation_email"),
     url(r'^account_activation_sent/$', views.account_activation_sent, name="account_activation_sent"),

@@ -1,0 +1,75 @@
+<style>
+    .helptext, li {
+        color: grey;
+        size: small;
+    }
+    .bodypart {
+        margin-top: 6%;
+    }
+    .tags {
+        font-size: 50%;
+    }
+    .step {
+        color: rgb(0, 51, 149);
+    }
+</style>
+
+<body>
+
+<head>
+    {% include 'navbar/navbar.html' %}
+    <title>Signup | The Decorista</title>
+</head>
+
+<div class="bodypart">
+
+    <center>
+
+{% block content %}
+  <h2>Sign up</h2><i><span class="step">Step 1 of 3</span></i><hr>
+  {% if tm %}
+    <span style="color: rgb(125, 6, 6);">{{tm}}</span>
+  {% endif %}
+    <form method="post" class="form-horizontal" action="/accounts/seller/signup2/">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+                <div class="col-sm-10">
+                    {{ field }}
+                </div>
+                    {% if field.label_tag == "<label for=\"id_password1\">Password:</label>" %}
+                        <small style="color: grey;" class="tags">
+                            <br>Your password can&#39;t be too similar to your other personal information.<br>
+                            Your password must contain at least 8 characters.<br>
+                            Your password can&#39;t be a commonly used password.<br>
+                            Your password can&#39;t be entirely numeric.<br>
+                        </small>
+                    {% elif field.label_tag == "<label for=\"id_address\">Address:</label>" %}
+                    <!--{% if field.label_tag != "<label for=\"id_password1\">Password:</label>" %}
+                        <br><small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}-->
+                    <small style="color: grey;" class="tags">
+                        <br><i>Please include pincode.</i>
+                    </small>
+                    {% endif %}
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <br><div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+    </form>
+    <a href="/accounts/login">Already have an account? Login here.</a><br>
+    <a href="/accounts/logout">Logout</a><br>
+{% endblock %}
+</center>
+</div>
+<br>
+<br>
+
+</body>

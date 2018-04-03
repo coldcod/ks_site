@@ -22,7 +22,7 @@
             <h3>{{tm}}</h3>
         </div><br>
     {% endif %}
-    <h1>{{product.title}}</h1><hr>
+    <h1 class="playfair-font">{{product.title}}</h1><hr>
     <img src="{%static 'store/'%}{{product.img}}" height=150>
     {% for image in image_list %}
         <img src="{%static 'store/'%}{{image}}" height=150>
