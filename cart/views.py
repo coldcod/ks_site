@@ -110,8 +110,8 @@ def addressFilledBuyout(req):
         send_email = False,
         buyer_name = fullname,
         email = email,
-        redirect_url = req.build_absolute_uri('placement_webhook'),
-        webhook = req.build_absolute_uri('placement_webhook')
+        redirect_url = "https://thedecorista.in/cart/confirmed/",
+        webhook = "https://thedecorista.in/cart/confirmed/"
     )
     return HttpResponseRedirect(response['payment_request']['longurl'])
 
