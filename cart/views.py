@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from .forms import LoggedInForm, LoggedOutForm
 from instamojo_wrapper import Instamojo
 import sys
 sys.path.append('../')
@@ -373,6 +374,7 @@ def buy(req):
         usr = req.user
         context = {
             'usr': usr,
+            'form': LoggedOutForm,
             'product': product,
             'logged_in': False,
             'cart_info': cart_info,
@@ -391,6 +393,7 @@ def buy(req):
         context = {
             'usr': usr,
             'product': product,
+            'form': LoggedInForm,
             'logged_in': True,
             'address_not_filled': address_not_filled,
             'first_name_not_filled': first_name_not_filled,

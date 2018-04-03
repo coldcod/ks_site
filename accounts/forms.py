@@ -13,15 +13,15 @@ class SignUpForm(UserCreationForm):
         fields = ['email', 'phone', 'password1', 'password2',]
 
 class ProfileForm(forms.ModelForm):
-    address = forms.CharField(max_length=600)
-    cc = forms.CharField(max_length=200)
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=60)
+    address = forms.CharField(max_length=600, required=False)
+    phone_number = forms.CharField(min_length=10, max_length=14, required=False)
+    alt_phone_number = forms.CharField(min_length=10, max_length=14, required=False)
+    first_name = forms.CharField(max_length=50, required=False)
+    last_name = forms.CharField(max_length=60, required=False)
 
     class Meta:
         model = User
-        exclude = ['email_confirmed',]
-        fields = ['address', 'first_name', 'last_name',]
+        fields = ['first_name', 'last_name', 'phone_number', 'alt_phone_number', 'address']
 
 class SellerSignupForm1(UserCreationForm):
     email = forms.EmailField(max_length=256, required=True)

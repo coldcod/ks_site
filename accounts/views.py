@@ -48,28 +48,38 @@ def settings(req):
     cart_info = get_cart.get_cart_info(req)
     if req.method == 'POST':
         form = ProfileForm(req.POST)
-        if form.is_valid():
-            user = req.user
-            user.refresh_from_db()
-            user.profile.cc = req.POST.get('cc')
-            user.profile.address = req.POST.get('address')
-            user.first_name = req.POST.get('first_name')
-            user.last_name = req.POST.get('last_name')
-            user.profile.save()
-            user.save()
-            success_message = "Settings were successfuly saved."
+        if req.user.is_authenticated:
+            if form.is_valid():
+                user = req.user
+                user.refresh_from_db()
+                user.profile.phone_number = req.POST.get('phone_number')
+                user.profile.alt_phone_number = req.POST.get('alt_phone_number')
+                user.profile.address = req.POST.get('address')
+                user.first_name = req.POST.get('first_name')
+                user.last_name = req.POST.get('last_name')
+                user.profile.save()
+                user.save()
+                success_message = "Settings were successfuly saved."
+            else:
+                success_message = "Form was rendered invalid. Please fill the form with appropriate information."
         else:
-            success_message = "Form was rendered invalid. Please fill the form with appropriate information."
+            return HttpResponse('Please login first, before editing your information.')
     else:
-        form = ProfileForm()
-        success_message = None
+        if req.user.is_authenticated:
+            form = ProfileForm()
+            success_message = None
+        else:
+            form = None
+            success_message = None
     context = {
+        'logged_in': req.user.is_authenticated and req.user.is_anonymous == False,
         'cart_info': cart_info,
         'orders': orders,
         'total': orders['total'] or 0,
         'count': orders['count'] or 0,
         'categories': categories,
         'user': req.user,
+        'form': form,
         'success_message': success_message,
     }
     return render(req, 'accounts/settings.html', context)
