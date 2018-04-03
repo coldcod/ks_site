@@ -7,11 +7,11 @@
         }
     </style>
 </head>
-
+<center>
 <div class="bodypart">
 
     <ul>
-        Cart info:<br>
+        <h1 class="playfair-font">Cart info:</h1> <hr> <br>
         {% if orders %}
             {% for order in orders %}
                 <li><a class="text_links" href="/store/{{order.product.pid}}/">{{order.product.title}}</a> - Rs. {{order.product.price}}, Quantity - {{order.quantity}}</li>
@@ -71,3 +71,4 @@
     {% endif %}
 
 </div>
+</center>
