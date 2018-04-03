@@ -42,7 +42,7 @@ class SellerSignupForm2(UserCreationForm):
         del self.fields['password1']
 
     name_of_your_shop = forms.CharField()
-    GST_No = forms.CharField(min_length=16, max_length=16, required=False)
+    GST_No = forms.CharField(min_length=15, max_length=15, required=False)
     PAN_No = forms.CharField(min_length=10, max_length=10)
 
     class Meta:
